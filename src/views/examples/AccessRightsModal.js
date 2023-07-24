@@ -6,7 +6,11 @@ import {
   from "reactstrap"
 
 
-const AccessRightModal = ({ toggleModal, modalState, setShowModal, data }) => {
+const AccessRightModal = ({operation,personel, toggleModal, modalState, setShowModal, data }) => {
+  function modifyRights(){
+    operation(personel)
+    setShowModal()  
+  }
   return (
     <>
       <Col md="4">
@@ -45,13 +49,21 @@ const AccessRightModal = ({ toggleModal, modalState, setShowModal, data }) => {
             </div>
           </div>
           <div className="modal-footer">
-            {(data.privilege === "GRANTED") && (
-                <Button className="btn-success" color="default" type="button">
+            {(data.privilege === "NO_ACCESS") && (
+                <Button className="btn-success" 
+                color="default" 
+                type="button"
+                onClick={()=>modifyRights()}
+                >
                 Ok,Grant access
               </Button>
               )}
-              {(data.privilege === "NO_ACCESS") && (
-                <Button className="btn-danger" color="default" type="button">
+              {(data.privilege === "GRANTED") && (
+                <Button className="btn-danger" 
+                color="danger" 
+                type="button"
+                onClick={()=>modifyRights()}
+                >
                 Ok,Revoke access
               </Button>
               )}

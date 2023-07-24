@@ -47,7 +47,7 @@ root.render(
       <Route path="/updateuser/:id" exact element={<UpdateUser/>}/>
       <Route path="*" element={<Navigate to="/" replace />} />
       {/* <Route path="/" exact element={<Index />} /> */}
-      <Route path="/" exact element={<Login/>} />
+      <Route path="/" exact element={<Index/>} />
 
     </Routes>
   </BrowserRouter>

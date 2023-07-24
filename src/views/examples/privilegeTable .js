@@ -27,32 +27,47 @@ import {
   Container,
   Row,
   Col,
-  Button
+  Button,
+  Alert
 } from "reactstrap";
 // core components
 
-import { useState, useEffect } from "react";
+import { useState, useEffect,useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "components/Navbars/Header";
 import AccessRightModal from "./AccessRightsModal";
 
 const PrivilegeTable = () => {
   const [message, setMessage] = useState('');
+  const [msg,setMsg]=useState("")
   const [data, setData] = useState([]);
+  const timeoutRef=useRef(null);
   const [showAction, setShowAction] = useState(false);
   const [information, setInformation] = useState({
     firstname: '',
     lastname: '',
     privilege: '',
   });
-
-  const toggleAccessRights = (fname, lname, privilege) => {
+  const [user,setUser]=useState({});
+  const [visible,setVisible]=useState(false)
+  const closeAlert=()=>{
+    setVisible(false);
+  }
+  const showAlert=()=>{
+    setVisible(true);
+    clearTimeout(timeoutRef.current)
+    timeoutRef.current=setTimeout(closeAlert,2000)  ;
+  }
+  
+  const toggleAccessRights = (fname, lname, privilege,person) => {
     setShowAction(!showAction);
     setInformation({
       firstname: fname,
       lastname: lname,
       privilege: privilege
     });
+    setUser(person)
+    console.log(privilege);
   };
   const navigate = useNavigate();
   useEffect(() => {
@@ -63,7 +78,7 @@ const PrivilegeTable = () => {
         'x-auth-token': JSON.parse(localStorage.getItem("token"))
       },
     }
-    fetch("http://localhost:8000/api/admin/updateaccessrights", requestOptions)
+    fetch("http://localhost:8000/api/admin/getrights", requestOptions)
       .then((response) => {
         if (!response.ok) {
 
@@ -79,27 +94,25 @@ const PrivilegeTable = () => {
         console.log(error.message)
         setMessage("connect your server")
       })
-  }, []);
+  },[msg] );
 
-  function changeRights(e) {
-    e.preventDefault();
+  function changeRights(person) {
     const requestOptions = {
       method: 'POST',
       headers: {
         'content-Type': 'application/json',
         'x-auth-token': JSON.parse(localStorage.getItem("token"))
       },
-      body: JSON.stringify(user)
+      body: JSON.stringify(person)
     }
-    fetch("http://localhost:8000/api/admin/modifyuser", requestOptions)
+    fetch("http://localhost:8000/api/admin/updateaccessrights", requestOptions)
       .then((response) => {
         if (response.ok) {
-          // setMessage("User updated successfully")
-          toggleUpdate();
-          
+           setMsg("CHANGED RIGHT SUCCESFULLY")
+           showAlert();
         }
         else {
-          setMessage("Not able to update");
+          // setMsg("UNSUCCESFULLY");
         }
       })
       .catch(error => {
@@ -134,6 +147,16 @@ const PrivilegeTable = () => {
                     >
                       change privilege
                     </Button>
+                    {msg && visible &&(
+                    <Alert color="success" fade={true} isOpen={visible}>
+                      <span className="alert-inner--icon">
+                        <i className="ni ni-bell-55" />
+                      </span>
+                      <span className="alert-inner--text ml-1">
+                        {msg}!
+                      </span>
+                    </Alert>
+                  )}
                     <div className="d-flex justify-content-end">
                       <Badge className="text-uppercase bg-warning" pill>Warning</Badge>
                     </div>
@@ -206,7 +229,7 @@ const PrivilegeTable = () => {
                         <td>
                           <Button
                             color="info"
-                            onClick={(e) => toggleAccessRights(person.user.firstname,person.user.lastname,person.privilege)}
+                            onClick={(e) => toggleAccessRights(person.user.firstname,person.user.lastname,person.privilege,person)}
                             size="sm"
                           >
                             Change privilege
@@ -227,7 +250,7 @@ const PrivilegeTable = () => {
       </Container>
       {/* access right modal */}
       <div>
-        <AccessRightModal toggleModal={toggleAccessRights} setShowModal={setShowAction} modalState={showAction} data={information} />
+        <AccessRightModal  operation={changeRights} personnel={user} toggleModal={toggleAccessRights} setShowModal={setShowAction} modalState={showAction} data={information} />
       </div>
     </>
   );
