@@ -32,6 +32,8 @@ import Login from "views/examples/Login"
 import Register from "views/examples/Register.js";
 import UpdateUser from "views/examples/UpdateUser";
 import PrivilegeTable from "views/examples/privilegeTable ";
+import News from "views/examples/news";
+import Profile from "views/examples/Profiles";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -40,9 +42,10 @@ root.render(
     <Routes>
       {/* <Route path="/" exact element={<Index />} /> */}
       <Route path="/landing-page" exact element={<Landing />} />
-      <Route path="/login-page" exact element={<Login />} />
+      <Route path="/login-page" exact element={<Profile />} />
       <Route path="/register-page" exact element={<Register />} />
       <Route path="/users" exact element={<Table />} />
+      <Route path="/news" exact element={<News />} />
       <Route path="/privileges" exact element={<PrivilegeTable/>} />
       <Route path="/updateuser/:id" exact element={<UpdateUser/>}/>
       <Route path="*" element={<Navigate to="/" replace />} />

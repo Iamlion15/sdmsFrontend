@@ -64,7 +64,7 @@ const Login = () => {
         localStorage.setItem("token", JSON.stringify(data.token))
         console.log(localStorage.getItem("token"))
         if (data.hasOwnProperty("token")) {
-          navigate("/privileges")
+          navigate("/news")
         }
         else {
           setMsg("incorrect password or email")
