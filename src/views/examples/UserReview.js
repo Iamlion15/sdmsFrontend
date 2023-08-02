@@ -4,7 +4,7 @@ import {
 } from 'reactstrap'
 
 
-const Review = ({names,comment}) => {
+const UserReview = ({names,comment}) => {
     return (
         <>
             <Card className="shadow m-1">
@@ -32,4 +32,4 @@ const Review = ({names,comment}) => {
 }
 
 
-export default Review;
+export default UserReview;

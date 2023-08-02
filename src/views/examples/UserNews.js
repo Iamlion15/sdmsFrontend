@@ -13,9 +13,9 @@ import {
 // core components
 import { useState, useEffect } from "react";
 import Header from "components/Navbars/Header";
-import NewsArticle from "./newsArticle";
+import UserNewsArticle from "./UsernewsArticle";
 
-const News = () => {
+const UserNews = () => {
     const [news, setNews] = useState([])
     const [message, setMessage] = useState('');
     useEffect(() => {
@@ -26,7 +26,7 @@ const News = () => {
                 'x-auth-token': JSON.parse(localStorage.getItem("token"))
             },
         }
-        fetch("http://localhost:8000/api/admin/getnews", requestOptions)
+        fetch("http://localhost:8000/api/user/getnews", requestOptions)
             .then((response) => {
                 if (!response.ok) {
 
@@ -52,7 +52,7 @@ const News = () => {
                         {news.map((article) => {
                             return (
                                 <div key={news._id}>
-                                    <NewsArticle title={article.title} summary={article.summary} source={article.source} sentiment={article.sentiment} link={article.url} id={article._id}/>
+                                    <UserNewsArticle title={article.title} summary={article.summary} source={article.source} sentiment={article.sentiment} link={article.url} id={article._id}/>
                                 </div>
                             )
                         })}
@@ -63,4 +63,4 @@ const News = () => {
     )
 }
 
-export default News;
+export default UserNews;

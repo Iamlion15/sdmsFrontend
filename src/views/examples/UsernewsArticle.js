@@ -7,7 +7,7 @@ import {
 import { useNavigate } from "react-router-dom";
 
 
-const NewsArticle = ({ title, summary, source, sentiment, link,id }) => {
+const UserNewsArticle = ({ title, summary, source, sentiment, link,id }) => {
     const navigate=useNavigate();
     return (
         <>
@@ -66,9 +66,9 @@ const NewsArticle = ({ title, summary, source, sentiment, link,id }) => {
                     <Button
                         className="mt-4"
                         color="primary"
-                        onClick={() => navigate("/news/review/"+id)}
+                        onClick={() => navigate("/user/news/review/"+id)}
                     >
-                        Read more
+                        Give your Review
                     </Button>
 
                 </CardBody>
@@ -78,4 +78,4 @@ const NewsArticle = ({ title, summary, source, sentiment, link,id }) => {
     )
 }
 
-export default NewsArticle;
+export default UserNewsArticle;

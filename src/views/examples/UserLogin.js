@@ -15,8 +15,9 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import LoginModal from "./LoginModal";
 // reactstrap components
 import {
   Button,
@@ -36,13 +37,27 @@ import {
 } from "reactstrap";
 // core components
 
-const Login = () => {
+const UserLogin = () => {
   const [data, setData] = useState({
-    username: "",
+    nid: "",
     password: ""
   });
   const [msg, setMsg] = useState("");
   const navigate = useNavigate();
+  const [showModal, setShowModal] = useState(false)
+  const timeoutRef = useRef(null);
+  const [visible, setVisible] = useState(false)
+  const closeAlert = () => {
+    setVisible(false);
+  }
+  const showAlert = () => {
+    setVisible(true);
+    clearTimeout(timeoutRef.current)
+    timeoutRef.current = setTimeout(closeAlert, 2000);
+  }
+  const toggleModal = () => {
+    setShowModal(!showModal);
+  };
   function loginHandler(e) {
     e.preventDefault();
     const methodOptions = {
@@ -52,24 +67,38 @@ const Login = () => {
         "content-type": "application/JSON",
       },
     };
-    fetch("http://localhost:8000/api/admin/login", methodOptions)
+    fetch("http://localhost:8000/api/user/login", methodOptions)
       .then((response) => {
         if (!response.ok) {
-          console.log("INVALID EMAIL OR PASSWORD");
-          setMsg("INVALID EMAIL OR PASSWORD")
-        }
-        return response.json();
-      })
-      .then((data) => {
-        localStorage.setItem("token", JSON.stringify(data.token))
-        console.log(localStorage.getItem("token"))
-        if (data.hasOwnProperty("token")) {
-          navigate("/privileges")
+          if (response.status == 401) {
+            console.log("INVALID EMAIL OR PASSWORD");
+            setMsg("INVALID EMAIL OR PASSWORD")
+            showAlert();
+          }
+          else {
+            if (response.status == 403) {
+              toggleModal();
+            }
+          }
         }
         else {
-          setMsg("incorrect password or email")
+          if (response.ok) {
+            return response.json();
+          }
         }
-
+      })
+      .then((value) => {
+        if (value.message == "200") {
+          localStorage.setItem("token", JSON.stringify(value.token))
+          localStorage.setItem("nid",data.nid)
+          console.log(localStorage.getItem("token"))
+          if (value.hasOwnProperty("token")) {
+            navigate("/user/news")
+          }
+          else {
+            setMsg("incorrect password or email")
+          }
+        }
       })
       .catch((error) => {
         setMsg("unexpected error occured");
@@ -138,18 +167,17 @@ const Login = () => {
                   <div className="text-center text-muted mb-4">
                     <small>Or sign in with credentials</small>
                   </div>
-                  
-                  {!(msg === "") && (
-                    <Alert color="danger" fade={false}>
+
+                  {msg && visible && (
+                    <Alert color="danger" fade={true} isOpen={visible}>
                       <span className="alert-inner--icon">
                         <i className="ni ni-bell-55" />
                       </span>
                       <span className="alert-inner--text ml-1">
-                        {msg}!
+                        EMAIL OR ID NUMBER HAS BEEN ALREADY USED!
                       </span>
                     </Alert>
                   )}
-
                   <Form role="form" onSubmit={loginHandler}>
                     <FormGroup className="mb-3">
                       <InputGroup className="input-group-alternative">
@@ -158,8 +186,8 @@ const Login = () => {
                             <i className="ni ni-email-83" />
                           </InputGroupText>
                         </InputGroupAddon>
-                        <Input placeholder="Username" type="text"
-                        onChange={(e) => setData({ ...data, username: e.target.value })}
+                        <Input placeholder="NATIONAL IDENTITY" type="text"
+                          onChange={(e) => setData({ ...data, nid: e.target.value })}
                         />
                       </InputGroup>
                     </FormGroup>
@@ -192,10 +220,10 @@ const Login = () => {
                       </label>
                     </div>
                     <div className="text-center">
-                    <input type="submit" 
-                    className="my-4 btn btn-success" 
-                    color="primary" 
-                    value="sign in"/>
+                      <input type="submit"
+                        className="my-4 btn btn-success"
+                        color="primary"
+                        value="sign in" />
                     </div>
                   </Form>
                 </CardBody>
@@ -224,10 +252,11 @@ const Login = () => {
           </Row>
         </Container>
       </section>
-
-
+      <div>
+        <LoginModal setShowModal={setShowModal} toggleModal={toggleModal} modalState={showModal} />
+      </div>
     </>
   );
 };
 
-export default Login;
+export default UserLogin;

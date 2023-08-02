@@ -33,7 +33,10 @@ import Register from "views/examples/Register.js";
 import UpdateUser from "views/examples/UpdateUser";
 import PrivilegeTable from "views/examples/privilegeTable ";
 import News from "views/examples/news";
-import Profile from "views/examples/Profiles";
+import NewsReview from "views/examples/newsReview";
+import UserLogin from "views/examples/UserLogin";
+import UserNews from "views/examples/UserNews";
+import UserNewsReview from "views/examples/UserNewsReview";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -42,15 +45,18 @@ root.render(
     <Routes>
       {/* <Route path="/" exact element={<Index />} /> */}
       <Route path="/landing-page" exact element={<Landing />} />
-      <Route path="/login-page" exact element={<Profile />} />
+      <Route path="/user/login" exact element={<Login />} />
+      <Route path="/user/news" exact element={<UserNews />} />
+      <Route path="/user/news/review/:id" exact element={<UserNewsReview />} />
       <Route path="/register-page" exact element={<Register />} />
       <Route path="/users" exact element={<Table />} />
       <Route path="/news" exact element={<News />} />
+      <Route path="news/review/:id" exact element={<NewsReview/>}/>
       <Route path="/privileges" exact element={<PrivilegeTable/>} />
       <Route path="/updateuser/:id" exact element={<UpdateUser/>}/>
       <Route path="*" element={<Navigate to="/" replace />} />
       {/* <Route path="/" exact element={<Index />} /> */}
-      <Route path="/" exact element={<Index/>} />
+      <Route path="/" exact element={<UserLogin/>} />
 
     </Routes>
   </BrowserRouter>

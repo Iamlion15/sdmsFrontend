@@ -1,21 +1,7 @@
-/*!
 
-=========================================================
-* Argon Design System React - v1.1.2
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-design-system-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/argon-design-system-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
-import React from "react";
+import { useState,useRef } from "react";
+import { useNavigate } from "react-router-dom";
+import RegisterModal from "./RegisterModal";
 
 // reactstrap components
 import {
@@ -26,6 +12,7 @@ import {
   FormGroup,
   Form,
   Input,
+  Alert,
   InputGroupAddon,
   InputGroupText,
   InputGroup,
@@ -35,169 +22,243 @@ import {
 } from "reactstrap";
 
 // core components
-import DemoNavbar from "components/Navbars/DemoNavbar.js";
-import SimpleFooter from "components/Footers/SimpleFooter.js";
-
-class Register extends React.Component {
-  componentDidMount() {
-    document.documentElement.scrollTop = 0;
-    document.scrollingElement.scrollTop = 0;
-    this.refs.main.scrollTop = 0;
+const Register = () => {
+  const [data, setData] = useState({
+    firstname: "",
+    lastname: "",
+    email: "",
+    phone: "",
+    nID: "",
+    password: ""
+  });
+  const [msg, setMsg] = useState("");
+  const [showRegister,setShowRegister]=useState(false)
+  const timeoutRef=useRef(null);
+  const [visible,setVisible]=useState(false)
+  const closeAlert=()=>{
+    setVisible(false);
   }
-  render() {
-    return (
-      <>
-        <DemoNavbar />
-        <main ref="main">
-          <section className="section section-shaped section-lg">
-            <div className="shape shape-style-1 bg-gradient-default">
-              <span />
-              <span />
-              <span />
-              <span />
-              <span />
-              <span />
-              <span />
-              <span />
-            </div>
-            <Container className="pt-lg-7">
-              <Row className="justify-content-center">
-                <Col lg="5">
-                  <Card className="bg-secondary shadow border-0">
-                    <CardHeader className="bg-white pb-5">
-                      <div className="text-muted text-center mb-3">
-                        <small>Sign up with</small>
-                      </div>
-                      <div className="text-center">
-                        <Button
-                          className="btn-neutral btn-icon mr-4"
-                          color="default"
-                          href="#pablo"
-                          onClick={(e) => e.preventDefault()}
-                        >
-                          <span className="btn-inner--icon mr-1">
-                            <img
-                              alt="..."
-                              src={
-                                require("assets/img/icons/common/github.svg")
-                                  .default
-                              }
-                            />
-                          </span>
-                          <span className="btn-inner--text">Github</span>
-                        </Button>
-                        <Button
-                          className="btn-neutral btn-icon ml-1"
-                          color="default"
-                          href="#pablo"
-                          onClick={(e) => e.preventDefault()}
-                        >
-                          <span className="btn-inner--icon mr-1">
-                            <img
-                              alt="..."
-                              src={
-                                require("assets/img/icons/common/google.svg")
-                                  .default
-                              }
-                            />
-                          </span>
-                          <span className="btn-inner--text">Google</span>
-                        </Button>
-                      </div>
-                    </CardHeader>
-                    <CardBody className="px-lg-5 py-lg-5">
-                      <div className="text-center text-muted mb-4">
-                        <small>Or sign up with credentials</small>
-                      </div>
-                      <Form role="form">
-                        <FormGroup>
-                          <InputGroup className="input-group-alternative mb-3">
-                            <InputGroupAddon addonType="prepend">
-                              <InputGroupText>
-                                <i className="ni ni-hat-3" />
-                              </InputGroupText>
-                            </InputGroupAddon>
-                            <Input placeholder="Name" type="text" />
-                          </InputGroup>
-                        </FormGroup>
-                        <FormGroup>
-                          <InputGroup className="input-group-alternative mb-3">
-                            <InputGroupAddon addonType="prepend">
-                              <InputGroupText>
-                                <i className="ni ni-email-83" />
-                              </InputGroupText>
-                            </InputGroupAddon>
-                            <Input placeholder="Email" type="email" />
-                          </InputGroup>
-                        </FormGroup>
-                        <FormGroup>
-                          <InputGroup className="input-group-alternative">
-                            <InputGroupAddon addonType="prepend">
-                              <InputGroupText>
-                                <i className="ni ni-lock-circle-open" />
-                              </InputGroupText>
-                            </InputGroupAddon>
-                            <Input
-                              placeholder="Password"
-                              type="password"
-                              autoComplete="off"
-                            />
-                          </InputGroup>
-                        </FormGroup>
-                        <div className="text-muted font-italic">
-                          <small>
-                            password strength:{" "}
-                            <span className="text-success font-weight-700">
-                              strong
-                            </span>
-                          </small>
-                        </div>
-                        <Row className="my-4">
-                          <Col xs="12">
-                            <div className="custom-control custom-control-alternative custom-checkbox">
-                              <input
-                                className="custom-control-input"
-                                id="customCheckRegister"
-                                type="checkbox"
-                              />
-                              <label
-                                className="custom-control-label"
-                                htmlFor="customCheckRegister"
-                              >
-                                <span>
-                                  I agree with the{" "}
-                                  <a
-                                    href="#pablo"
-                                    onClick={(e) => e.preventDefault()}
-                                  >
-                                    Privacy Policy
-                                  </a>
-                                </span>
-                              </label>
-                            </div>
-                          </Col>
-                        </Row>
-                        <div className="text-center">
-                          <Button
-                            className="mt-4"
-                            color="primary"
-                            type="button"
-                          >
-                            Create account
-                          </Button>
-                        </div>
-                      </Form>
-                    </CardBody>
-                  </Card>
-                </Col>
-              </Row>
-            </Container>
-          </section>
-        </main>
-        <SimpleFooter />
-      </>
-    );
+  const showAlert=()=>{
+    setVisible(true);
+    clearTimeout(timeoutRef.current)
+    timeoutRef.current=setTimeout(closeAlert,2000)  ;
   }
+  const toggleRegister = () => {
+    setShowRegister(!showRegister);
+  };
+  const navigate = useNavigate();
+  function RegisterHandler(e) {
+    e.preventDefault();
+    console.log("hello")
+    const methodOptions = {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: {
+        "content-type": "application/JSON",
+      },
+    };
+    fetch("http://localhost:8000/api/user/register", methodOptions)
+      .then((response) => {
+        if (!response.ok) {
+          console.log(response);
+          console.log("INVALID EMAIL OR PASSWORD");
+          setMsg("INVALID CREDENTIALS")
+          if(response.status==405)
+          {
+            showAlert();
+          }
+        }
+        else{
+          if(response.ok){
+            toggleRegister();
+          }
+        }
+      })
+      .catch((error) => {
+        setMsg("unexpected error occured");
+        console.log(error);
+      });
+  }
+  return (
+    <>
+      <section className="section section-shaped section-lg">
+        <div className="shape shape-style-1 bg-gradient-default">
+          <span />
+          <span />
+          <span />
+          <span />
+          <span />
+          <span />
+          <span />
+          <span />
+        </div>
+        <Container className="pt-lg-7">
+          <Row className="justify-content-center">
+            <Col lg="5">
+              <Card className="bg-secondary shadow border-0">
+                <CardHeader className="bg-white pb-3">
+                  <div className="text-muted text-center mb-3">
+                    <small>Sign up with</small>
+                  </div>
+                  <div className="text-center">
+                    <Button
+                      className="btn-neutral btn-icon mr-4"
+                      color="default"
+                      href="#pablo"
+                      onClick={(e) => e.preventDefault()}
+                    >
+                      <span className="btn-inner--icon mr-1">
+                        <img
+                          alt="..."
+                          src={
+                            require("assets/img/icons/common/github.svg")
+                              .default
+                          }
+                        />
+                      </span>
+                      <span className="btn-inner--text">Github</span>
+                    </Button>
+                    <Button
+                      className="btn-neutral btn-icon ml-1"
+                      color="default"
+                      href="#pablo"
+                      onClick={(e) => e.preventDefault()}
+                    >
+                      <span className="btn-inner--icon mr-1">
+                        <img
+                          alt="..."
+                          src={
+                            require("assets/img/icons/common/google.svg")
+                              .default
+                          }
+                        />
+                      </span>
+                      <span className="btn-inner--text">Google</span>
+                    </Button>
+                  </div>
+                </CardHeader>
+                <CardBody className="px-lg-5 py-lg-5">
+                {msg && visible &&(
+                    <Alert color="danger" fade={true} isOpen={visible}>
+                      <span className="alert-inner--icon">
+                        <i className="ni ni-bell-55" />
+                      </span>
+                      <span className="alert-inner--text ml-1">
+                        EMAIL OR ID NUMBER HAS BEEN ALREADY USED!
+                      </span>
+                    </Alert>
+                  )}
+                  <Form role="form" onSubmit={RegisterHandler}>
+                    <FormGroup>
+                      <InputGroup className="input-group-alternative mb-3">
+                        <InputGroupAddon addonType="prepend">
+                          <InputGroupText>
+                            <i className="ni ni-hat-3" />
+                          </InputGroupText>
+                        </InputGroupAddon>
+                        <Input
+                          required
+                          placeholder="First Name"
+                          type="text"
+                          onChange={(e) => setData({ ...data, firstname: e.target.value })}
+                        />
+                      </InputGroup>
+                    </FormGroup>
+                    <FormGroup>
+                      <InputGroup className="input-group-alternative mb-3">
+                        <InputGroupAddon addonType="prepend">
+                          <InputGroupText>
+                            <i className="ni ni-hat-3" />
+                          </InputGroupText>
+                        </InputGroupAddon>
+                        <Input
+                          required
+                          placeholder="Last Name"
+                          type="text"
+                          onChange={(e) => setData({ ...data, lastname: e.target.value })}
+                        />
+                      </InputGroup>
+                    </FormGroup>
+                    <FormGroup>
+                      <InputGroup className="input-group-alternative mb-3">
+                        <InputGroupAddon addonType="prepend">
+                          <InputGroupText>
+                            <i className="ni ni-email-83" />
+                          </InputGroupText>
+                        </InputGroupAddon>
+                        <Input
+                          required
+                          placeholder="Email"
+                          type="email"
+                          onChange={(e) => setData({ ...data, email: e.target.value })}
+                        />
+                      </InputGroup>
+                    </FormGroup>
+                    <FormGroup>
+                      <InputGroup className="input-group-alternative mb-3">
+                        <InputGroupAddon addonType="prepend">
+                          <InputGroupText>
+                            <i className="ni ni-phone" />
+                          </InputGroupText>
+                        </InputGroupAddon>
+                        <Input
+                          required
+                          placeholder="Phone number"
+                          type="number"
+                          onChange={(e) => setData({ ...data, phone: e.target.value })}
+                        />
+                      </InputGroup>
+                    </FormGroup>
+                    <FormGroup>
+                      <InputGroup className="input-group-alternative mb-3">
+                        <InputGroupAddon addonType="prepend">
+                          <InputGroupText>
+                            <i className="ni ni-hat-3" />
+                          </InputGroupText>
+                        </InputGroupAddon>
+                        <Input
+                          required
+                          placeholder="National Identification"
+                          type="number"
+                          onChange={(e) => setData({ ...data, nID: e.target.value })}
+                        />
+                      </InputGroup>
+                    </FormGroup>
+                    <FormGroup>
+                      <InputGroup className="input-group-alternative">
+                        <InputGroupAddon addonType="prepend">
+                          <InputGroupText>
+                            <i className="ni ni-lock-circle-open" />
+                          </InputGroupText>
+                        </InputGroupAddon>
+                        <Input
+                          required
+                          placeholder="Password"
+                          type="password"
+                          onChange={(e) => setData({ ...data, password: e.target.value })}
+                        />
+                      </InputGroup>
+                    </FormGroup>
+                    <div className="text-center">
+                      <input type="submit"
+                        className="mt-4 btn btn-success"
+                        color="primary"
+                        value="Create account" />
+                    </div>
+                  </Form>
+                </CardBody>
+              </Card>
+            </Col>
+          </Row>
+        </Container>
+      </section>
+      {/* register modal */}
+      <div>
+        <RegisterModal setShowModal={setShowRegister} toggleModal={toggleRegister} modalState={showRegister}/>
+      </div>
+    </>
+  );
 }
+
 
 export default Register;
