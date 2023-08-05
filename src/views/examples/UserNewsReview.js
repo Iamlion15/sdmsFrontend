@@ -52,8 +52,11 @@ const UserNewsReview = () => {
     setShowPersonalReview(!showPersonalReview);
   };
   const { id } = useParams();
-  const url = "http://localhost:8000/api/user/getreviews/" + id
+
   useEffect(() => {
+    const fetchData=async()=>{
+      const urls = ["http://localhost:8000/api/user/getreviews/" + id,
+      "http://localhost:8000/api/user/getnews/" + id]
     const requestOptions = {
       method: 'GET',
       headers: {
@@ -61,29 +64,24 @@ const UserNewsReview = () => {
         'x-auth-token': JSON.parse(localStorage.getItem("token"))
       }
     }
-    fetch(url, requestOptions)
-      .then((response) => {
-        if (!response.ok) {
-          setMessage("PLEASE RETRY")
-        }
-        return response.json();
-      })
-      .then(data => {
-        setReviews(data)
-        setTotalComments(data.length)
-        SetNewsData({
-          title: data[0].news.title,
-          summary: data[0].news.summary,
-          source: data[0].news.source,
-          sentiment: data[0].news.setniment,
-          link: data[0].news.url
-        })
-      })
-      .catch(error => {
-        console.log(error)
-        setMessage("connect your server")
-      })
-  }, [msg]);
+    const requests=urls.map((url)=>fetch(url,requestOptions));
+    const responses=await Promise.all(requests)
+    const data=await Promise.all(responses.map(response=>response.json()));
+    setReviews(data[0])
+    setTotalComments(data[0].length)
+    SetNewsData({
+              title: data[1].title,
+              summary: data[1].summary,
+              source: data[1].source,
+              sentiment: data[1].setniment,
+              link: data[1].url
+            })
+            console.log(data[1])
+    }
+    fetchData();
+    
+  }, [])
+
 
 
   return (

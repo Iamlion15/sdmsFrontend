@@ -9,42 +9,43 @@ import {
 } from "reactstrap"
 import { useEffect, useState } from "react"
 
-const DeleteComment=()=>{
-        e.preventDefault();
+
+const UserPersonalComment = ({ reviews,setFeedback,showInfo,handleNext }) => {
+    
+    const DeleteComment=(id)=>{
+        const data={
+            "id":id
+        }
         const methodOptions = {
           method: "DELETE",
           body: JSON.stringify(data),
           headers: {
             "content-type": "application/JSON",
+            'x-auth-token': JSON.parse(localStorage.getItem("token"))
           },
         };
         fetch("http://localhost:8000/api/user/deletereview", methodOptions)
           .then((response) => {
             if (!response.ok) {
-              console.log("INVALID EMAIL OR PASSWORD");
-              setMsg("INVALID EMAIL OR PASSWORD")
+              if(response.status===400){
+                setFeedback("INVALID EMAIL OR PASSWORD")
+              }
             }
-            return response.json();
-          })
-          .then((data) => {
-            localStorage.setItem("token", JSON.stringify(data.token))
-            console.log(localStorage.getItem("token"))
-            if (data.hasOwnProperty("token")) {
-              navigate("/privileges")
+            else
+            {
+                if(response.status ===200)
+                {
+                    setFeedback("1")
+                    showInfo()
+                }
             }
-            else {
-              setMsg("incorrect password or email")
-            }
-    
-          })
+        })
           .catch((error) => {
-            setMsg("unexpected error occured");
+            setFeedback("unexpected error occured");
             console.log(error);
           });
       }
-}
 
-const UserPersonalComment = ({ reviews }) => {
     const [userComment, setUserComments] = useState([]);
     const userComments = () => {
         const nid = JSON.parse(localStorage.getItem("nid"))
@@ -94,7 +95,7 @@ const UserPersonalComment = ({ reviews }) => {
                                 <Row>
                                     <Col><Button
                                         color="info"
-                                        onClick={(e) => e.preventDefault()}
+                                        onClick={() => handleNext(review) }
                                         size="sm"
                                     >
                                         Update
@@ -103,7 +104,7 @@ const UserPersonalComment = ({ reviews }) => {
                                         <div className="d-flex justify-content-end">
                                             <Button
                                                 color="danger"
-                                                onClick={(e) => e.preventDefault()}
+                                                onClick={() => DeleteComment(review._id)}
                                                 size="sm"
                                             >
                                                 Delete

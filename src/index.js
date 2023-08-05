@@ -37,6 +37,7 @@ import NewsReview from "views/examples/newsReview";
 import UserLogin from "views/examples/UserLogin";
 import UserNews from "views/examples/UserNews";
 import UserNewsReview from "views/examples/UserNewsReview";
+import Indexii from "views/Indexiii";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -56,7 +57,7 @@ root.render(
       <Route path="/updateuser/:id" exact element={<UpdateUser/>}/>
       <Route path="*" element={<Navigate to="/" replace />} />
       {/* <Route path="/" exact element={<Index />} /> */}
-      <Route path="/" exact element={<UserLogin/>} />
+      <Route path="/" exact element={<Indexii/>} />
 
     </Routes>
   </BrowserRouter>
