@@ -6,9 +6,10 @@ import {
   from "reactstrap"
 
 
-const AccessRightModal = ({operation,personel, toggleModal, modalState, setShowModal, data }) => {
+const AccessRightModal = ({operation,personnel, toggleModal, modalState, setShowModal, data }) => {
   function modifyRights(){
-    operation(personel)
+    operation(personnel)
+    console.log(personnel)
     setShowModal()  
   }
   return (

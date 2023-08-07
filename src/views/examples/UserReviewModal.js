@@ -29,7 +29,7 @@ const UserReviewModal = ({ toggleModal, setShowModal, modalState,setFeedback,sho
                 'x-auth-token': JSON.parse(localStorage.getItem("token"))
             },
         };
-        fetch("http://localhost:8000/api/user/modifyreview", methodOptions)
+        fetch("http://localhost:8000/api/user/addreview", methodOptions)
             .then((response) => {
                 if (!response.ok) {
                     if (response.status === 500) {

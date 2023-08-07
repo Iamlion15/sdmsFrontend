@@ -16,6 +16,7 @@
 
 */
 import "assets/css/table-font/argon-dashboard-react.min.css"
+import LineChart from "./LineChart";
 import { useState } from "react";
 // node.js library that concatenates classes (strings)
 import classnames from "classnames";
@@ -69,56 +70,7 @@ const Indexii = (props) => {
       <Container className="mt--7" fluid>
         <Row>
           <Col className="mb-5 mb-xl-0" xl="8">
-            <Card className="bg-gradient-default shadow">
-              <CardHeader className="bg-transparent">
-                <Row className="align-items-center">
-                  <div className="col">
-                    <h6 className="text-uppercase text-light ls-1 mb-1">
-                      Overview
-                    </h6>
-                    <h2 className="text-white mb-0">Sales value</h2>
-                  </div>
-                  <div className="col">
-                    <Nav className="justify-content-end" pills>
-                      <NavItem>
-                        <NavLink
-                          className={classnames("py-2 px-3", {
-                            active: activeNav === 1,
-                          })}
-                          href="#pablo"
-                          onClick={(e) => toggleNavs(e, 1)}
-                        >
-                          <span className="d-none d-md-block">Positive sentiment</span>
-                          <span className="d-md-none">P+ve</span>
-                        </NavLink>
-                      </NavItem>
-                      <NavItem>
-                        <NavLink
-                          className={classnames("py-2 px-3", {
-                            active: activeNav === 2,
-                          })}
-                          data-toggle="tab"
-                          onClick={(e) => toggleNavs(e, 2)}
-                        >
-                          <span className="d-none d-md-block">Negative Sentiment</span>
-                          <span className="d-md-none">N+ve</span>
-                        </NavLink>
-                      </NavItem>
-                    </Nav>
-                  </div>
-                </Row>
-              </CardHeader>
-              <CardBody>
-                {/* Chart */}
-                <div className="chart">
-                  <Line
-                    data={chartExample1[chartExample1Data]}
-                    options={chartExample1.options}
-                    getDatasetAtEvent={(e) => console.log(e)}
-                  />
-                </div>
-              </CardBody>
-            </Card>
+          <LineChart chartExample1={chartExample1}/>
           </Col>
           <Col xl="4">
             <Card className="shadow">
@@ -126,9 +78,9 @@ const Indexii = (props) => {
                 <Row className="align-items-center">
                   <div className="col">
                     <h6 className="text-uppercase text-muted ls-1 mb-1">
-                      Performance
+                      Sentiment analysis
                     </h6>
-                    <h2 className="mb-0">Total orders</h2>
+                    <h2 className="mb-0">Neutral Sentiments</h2>
                   </div>
                 </Row>
               </CardHeader>

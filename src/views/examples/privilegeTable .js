@@ -17,6 +17,7 @@
 */
 // reactstrap components
 import "assets/css/table-font/argon-dashboard-react.min.css"
+import AdminNavbar from "components/sharedNavbar/Navbar";
 
 import {
   Badge,
@@ -67,7 +68,6 @@ const PrivilegeTable = () => {
       privilege: privilege
     });
     setUser(person)
-    console.log(privilege);
   };
   const navigate = useNavigate();
   useEffect(() => {
@@ -87,7 +87,7 @@ const PrivilegeTable = () => {
         return response.json();
       })
       .then(value => {
-        console.log(value)
+        // console.log(value)
         setData(value);
       })
       .catch(error => {
@@ -123,6 +123,7 @@ const PrivilegeTable = () => {
 
   return (
     <>
+    <AdminNavbar/>
       <Header />
       {/* Page content */}
       <Container className="mt--7" fluid >

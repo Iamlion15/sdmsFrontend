@@ -17,6 +17,7 @@
 */
 // reactstrap components
 import "assets/css/table-font/argon-dashboard-react.min.css"
+import AdminNavbar from "components/sharedNavbar/Navbar";
 
 import {
   Badge,
@@ -87,6 +88,7 @@ const UsersTable = () => {
 
   return (
     <>
+    <AdminNavbar/>
       <Header />
       {/* Page content */}
       <Container className="mt--7" fluid>

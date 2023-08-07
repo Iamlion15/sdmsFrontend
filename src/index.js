@@ -37,7 +37,8 @@ import NewsReview from "views/examples/newsReview";
 import UserLogin from "views/examples/UserLogin";
 import UserNews from "views/examples/UserNews";
 import UserNewsReview from "views/examples/UserNewsReview";
-import Indexii from "views/Indexiii";
+import Indexii from "report/Indexiii";
+import DataTranscoder from "variables/dataTranscoder";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -52,12 +53,14 @@ root.render(
       <Route path="/register-page" exact element={<Register />} />
       <Route path="/users" exact element={<Table />} />
       <Route path="/news" exact element={<News />} />
+      <Route path="/charts" exact element={<Indexii />} />
       <Route path="news/review/:id" exact element={<NewsReview/>}/>
       <Route path="/privileges" exact element={<PrivilegeTable/>} />
       <Route path="/updateuser/:id" exact element={<UpdateUser/>}/>
       <Route path="*" element={<Navigate to="/" replace />} />
+      <Route path="/data" exact element={<DataTranscoder />} />
       {/* <Route path="/" exact element={<Index />} /> */}
-      <Route path="/" exact element={<Indexii/>} />
+      <Route path="/" exact element={<Login/>} />
 
     </Routes>
   </BrowserRouter>

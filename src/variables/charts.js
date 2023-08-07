@@ -15,7 +15,9 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
+
 const Chart = require("chart.js");
+const DataTranscoder=require("./DataTranscoderr");
 //
 // Chart extension for making the bars rounded
 // Code from: https://codepen.io/jedtrow/full/ygRYgo
@@ -318,8 +320,8 @@ let chartExample1 = {
           },
           ticks: {
             callback: function (value) {
-              if (!(value % 10)) {
-                return "$" + value + "k";
+              if (!(value % 1)) {
+                return "" + value + " articles";
               }
             },
           },
@@ -345,6 +347,7 @@ let chartExample1 = {
   },
   data1: (canvas) => {
     return {
+      
       labels: ["May", "June", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
       datasets: [
         {
