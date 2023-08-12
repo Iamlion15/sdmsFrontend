@@ -32,8 +32,8 @@ import {
   Col,
 } from "reactstrap";
 // core components
-import DemoNavbar from "components/Navbars/DemoNavbar.js";
-import SimpleFooter from "components/Footers/SimpleFooter.js";
+import AdminNavbar from "components/sharedNavbar/Navbar";
+import Footer from "components/Footers/Footer";
 import OperationHeader from "components/Navbars/OperationHeader";
 import UpdateModal from "./updateInfoModal";
 
@@ -104,7 +104,7 @@ const UpdateUser = () => {
   }
   return (
     <>
-      <DemoNavbar />
+      <AdminNavbar/>
       <OperationHeader />
       <section className="section">
         <Container className="mt--7" fluid>
@@ -276,7 +276,7 @@ const UpdateUser = () => {
         </Container>
 
       </section>
-      <SimpleFooter />
+      <Footer />
       <div>
       <UpdateModal toggleModal={toggleUpdate} setShowModal={setShowUpdate} modalState={showUpdate} />
       </div>

@@ -14,6 +14,9 @@ import {
 import { useState, useEffect } from "react";
 import Header from "components/Navbars/Header";
 import NewsArticle from "./newsArticle";
+import Footer from "components/Footers/Footer";
+import OperationHeader from "components/Navbars/OperationHeader";
+import AdminNavbar from "components/sharedNavbar/Navbar";
 
 const News = () => {
     const [news, setNews] = useState([])
@@ -45,20 +48,22 @@ const News = () => {
 
     return (
         <>
-            <Header />
-            <Container className="mt--7 py-7 fill-white" fluid >
+            <AdminNavbar/>
+            <OperationHeader />
+            <Container className="mt--7 py-0 fill-white" fluid >
                 <Row>
                     <Col xs="10">
                         {news.map((article) => {
                             return (
-                                <div key={news._id}>
-                                    <NewsArticle title={article.title} summary={article.summary} source={article.source} sentiment={article.sentiment} link={article.url} id={article._id}/>
+                                <div key={article._id}>
+                                    <NewsArticle title={article.title} summary={article.summary} source={article.source} sentiment={article.sentiment} link={article.url} id={article._id} />
                                 </div>
                             )
                         })}
                     </Col>
                 </Row>
             </Container>
+            <Footer />
         </>
     )
 }

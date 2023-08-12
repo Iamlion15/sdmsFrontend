@@ -19,6 +19,8 @@ import { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import UserReviewModal from "./UserReviewModal";
 import UserModifyComments from "./userModifyComment";
+import UserOperationHeader from "components/Navbars/UserOperationHeader";
+import UserNavbar from "components/sharedNavbar/UserNavbar";
 
 const UserNewsReview = () => {
   const [reviews, setReviews] = useState([])
@@ -86,7 +88,8 @@ const UserNewsReview = () => {
 
   return (
     <>
-      <UserHeader />
+    <UserNavbar/>
+      <UserOperationHeader/>
       {/* Page content */}
       <Container className="mt--7" fluid>
         <Row>

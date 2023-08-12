@@ -8,7 +8,7 @@ import {
 
 import { useNavigate } from "react-router-dom";
 
-const OperationHeader = () => {
+const UserOperationHeader = () => {
     const navigate=useNavigate()
     return (
         <div className="header bg-gradient-beach pb-8 pt-5 pt-md-8">
@@ -37,7 +37,7 @@ const OperationHeader = () => {
                                                 </div>
                                                 <div className="pl-4">
                                                     <h5 className="title text-success">
-                                                        Registered Users
+                                                        Number of reviews submitted
                                                     </h5>
                                                     <p>
                                                         8 users
@@ -71,7 +71,7 @@ const OperationHeader = () => {
                                                 </div>
                                                 <div className="pl-4">
                                                     <h5 className="title text-success">
-                                                        Total number of reviews
+                                                        Total number of reviews by other members
                                                     </h5>
                                                     <p>
                                                         10 reviews
@@ -150,4 +150,4 @@ const OperationHeader = () => {
         </div>
     )
 }
-export default OperationHeader;
+export default UserOperationHeader;

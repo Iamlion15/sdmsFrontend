@@ -35,10 +35,11 @@ import {
   Button
 } from "reactstrap";
 // core components
-import Header from "components/Navbars/Header.js";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import DeleteModal from "./deleteModal";
+import Footer from "components/Footers/Footer";
+import OperationHeader from "components/Navbars/OperationHeader";
 
 const UsersTable = () => {
   const [message, setMessage] = useState('');
@@ -89,7 +90,8 @@ const UsersTable = () => {
   return (
     <>
     <AdminNavbar/>
-      <Header />
+    <OperationHeader/>
+      {/* <Header /> */}
       {/* Page content */}
       <Container className="mt--7" fluid>
         {/* Table */}
@@ -195,7 +197,7 @@ const UsersTable = () => {
           </div>
         </Row>
       </Container>
-
+      <Footer/>
       {/* deleteModal */}
       <div>
         <DeleteModal toggleModal={toggleDelete} setShowModal={setShowDelete} modalState={showDelete} data={user}/>

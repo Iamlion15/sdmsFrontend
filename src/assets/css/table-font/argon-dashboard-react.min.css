@@ -13230,6 +13230,12 @@ button.bg-lighter:focus {
 .bg-gradient-primary {
   background: linear-gradient(87deg, #5e72e4 0, #825ee4 100%) !important;
 }
+.bg-gradient-beach {
+  background: linear-gradient(87deg, #02AABD 0, #00CDAC 100%) !important;
+}
+.bg-gradient-happy {
+  background: linear-gradient(87deg, #89f7fe 0, #66a6ff 100%) !important;
+}
 .bg-gradient-secondary {
   background: linear-gradient(87deg, #f7fafc 0, #f7f8fc 100%) !important;
 }

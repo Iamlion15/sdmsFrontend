@@ -53,21 +53,22 @@ const Header = () => {
 
   return (
     <>
-      <div className="header bg-gradient-info pb-8 pt-5 pt-md-8">
+      <div className="header bg-gradient-beach pb-8 pt-5 pt-md-8">
         <Container fluid>
           <div className="header-body">
             {/* Card stats */}
             <Row>
-              <Col lg="6" xl="3">
-                <Card className="card-stats mb-4 mb-xl-0">
+              <Col>
+                <Card className="card-stats mb- mb-xl-0">
                   <CardBody>
+                  <Col>
                     <Row>
                       <div className="col">
                         <CardTitle
                           tag="h5"
                           className="text-uppercase text-muted mb-0"
                         >
-                          Daily visits
+                          Daily Review
                         </CardTitle>
                         <span className="h2 font-weight-bold mb-0">
                           {dailyVisits.TodayCount}
@@ -80,18 +81,16 @@ const Header = () => {
                       </Col>
                     </Row>
                     <p className="mt-3 mb-0 text-muted text-sm">
-                    {dailyVisits.percentage < 0 && (
-                        <span className="text-warning mr-2">
-                      <i className="fa fa-arrow-down" /> {weeklyVisits.percentage}</span>)} 
-                      {dailyVisits.percentage >= 0 && (
                         <span className="text-success mr-2">
-                      <i className="fa fa-arrow-up" /> {weeklyVisits.percentage}</span>)}
+                      <i className="fa fa-arrow-up" /> {weeklyVisits.percentage}</span>
                       <span className="text-nowrap">Since yesterday</span>
                     </p>
+                    </Col>
+                    
                   </CardBody>
                 </Card>
               </Col>
-              <Col lg="6" xl="3">
+              {/* <Col lg="6" xl="6">
                 <Card className="card-stats mb-4 mb-xl-0">
                   <CardBody>
                     <Row>
@@ -100,7 +99,7 @@ const Header = () => {
                           tag="h5"
                           className="text-uppercase text-muted mb-0"
                         >
-                          New users
+                          Total artcles users
                         </CardTitle>
                         <span className="h2 font-weight-bold mb-0">{users.currentWeekCount}</span>
                       </div>
@@ -121,8 +120,8 @@ const Header = () => {
                     </p>
                   </CardBody>
                 </Card>
-              </Col>
-              <Col lg="6" xl="3">
+              </Col> */}
+              {/* <Col lg="6" xl="3">
                 <Card className="card-stats mb-4 mb-xl-0">
                   <CardBody>
                     <Row>
@@ -184,7 +183,7 @@ const Header = () => {
                     </p>
                   </CardBody>
                 </Card>
-              </Col>
+              </Col> */}
             </Row>
           </div>
         </Container>

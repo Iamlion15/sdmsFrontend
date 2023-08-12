@@ -64,7 +64,7 @@ const Login = () => {
         localStorage.setItem("token", JSON.stringify(data.token))
         console.log(localStorage.getItem("token"))
         if (data.hasOwnProperty("token")) {
-          navigate("/data")
+          navigate("/admin/users")
         }
         else {
           setMsg("incorrect password or email")
@@ -113,7 +113,7 @@ const Login = () => {
                           }
                         />
                       </span>
-                      <span className="btn-inner--text">Github</span>
+                      <span className="btn-inner--text">Admin</span>
                     </Button>
                     <Button
                       className="btn-neutral btn-icon ml-1"
@@ -130,7 +130,7 @@ const Login = () => {
                           }
                         />
                       </span>
-                      <span className="btn-inner--text">Google</span>
+                      <span className="btn-inner--text">OGS personnel</span>
                     </Button>
                   </div>
                 </CardHeader>

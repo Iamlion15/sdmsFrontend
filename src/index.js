@@ -26,7 +26,7 @@ import "assets/vendor/nucleo/css/nucleo.css";
 
 
 import Index from "views/Index.js";
-import Landing from "views/examples/Landing.js";
+// import Landing from "views/examples/Landing.js";
 import Table from "views/examples/usersTable.js";
 import Login from "views/examples/Login"
 import Register from "views/examples/Register.js";
@@ -46,21 +46,20 @@ root.render(
   <BrowserRouter>
     <Routes>
       {/* <Route path="/" exact element={<Index />} /> */}
-      <Route path="/landing-page" exact element={<Landing />} />
-      <Route path="/user/login" exact element={<Login />} />
+      {/* <Route path="/landing-page" exact element={<Landing />} /> */}
       <Route path="/user/news" exact element={<UserNews />} />
       <Route path="/user/news/review/:id" exact element={<UserNewsReview />} />
-      <Route path="/register-page" exact element={<Register />} />
-      <Route path="/users" exact element={<Table />} />
-      <Route path="/news" exact element={<News />} />
+      <Route path="/user/register-page" exact element={<Register />} />
+      <Route path="/admin/users" exact element={<Table />} />
+      <Route path="/admin/news" exact element={<News />} />
       <Route path="/charts" exact element={<Indexii />} />
       <Route path="news/review/:id" exact element={<NewsReview/>}/>
-      <Route path="/privileges" exact element={<PrivilegeTable/>} />
+      <Route path="/admin/privileges" exact element={<PrivilegeTable/>} />
       <Route path="/updateuser/:id" exact element={<UpdateUser/>}/>
       <Route path="*" element={<Navigate to="/" replace />} />
-      <Route path="/data" exact element={<DataTranscoder />} />
-      {/* <Route path="/" exact element={<Index />} /> */}
+      <Route path="/admin/dashboard" exact element={<Indexii />} />
       <Route path="/" exact element={<Login/>} />
+      <Route path="/user/login" exact element={<UserLogin/>} />
 
     </Routes>
   </BrowserRouter>

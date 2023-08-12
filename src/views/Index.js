@@ -22,7 +22,7 @@ import { Container, Row } from "reactstrap";
 
 // core components
 import DemoNavbar from "components/Navbars/DemoNavbar.js";
-import CardsFooter from "components/Footers/CardsFooter.js";
+// import CardsFooter from "components/Footers/CardsFooter.js";
 
 // index page sections
 import Hero from "./IndexSections/Hero.js";
@@ -90,7 +90,7 @@ class Index extends React.Component {
           <Login />
           <Download />
         </main>
-        <CardsFooter />
+        {/* <CardsFooter /> */}
       </>
     );
   }

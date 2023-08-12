@@ -37,6 +37,8 @@ import { useState, useEffect,useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "components/Navbars/Header";
 import AccessRightModal from "./AccessRightsModal";
+import Footer from "components/Footers/Footer";
+import OperationHeader from "components/Navbars/OperationHeader";
 
 const PrivilegeTable = () => {
   const [message, setMessage] = useState('');
@@ -124,7 +126,7 @@ const PrivilegeTable = () => {
   return (
     <>
     <AdminNavbar/>
-      <Header />
+      <OperationHeader/>
       {/* Page content */}
       <Container className="mt--7" fluid >
         {/* Table */}
@@ -249,6 +251,7 @@ const PrivilegeTable = () => {
           </div>
         </Row>
       </Container>
+      <Footer/>  
       {/* access right modal */}
       <div>
         <AccessRightModal  operation={changeRights} personnel={user} toggleModal={toggleAccessRights} setShowModal={setShowAction} modalState={showAction} data={information} />

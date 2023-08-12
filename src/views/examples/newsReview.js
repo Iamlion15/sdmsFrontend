@@ -28,10 +28,12 @@ import {
   Col,
 } from "reactstrap";
 // core components
-import UserHeader from "components/Navbars/UserHeader.js";
+import AdminNavbar from "components/sharedNavbar/Navbar";
 import Review from "./review";
 import { useState,useEffect } from "react";
 import { useParams } from "react-router-dom";
+import OperationHeader from "components/Navbars/OperationHeader";
+import Footer from "components/Footers/Footer";
 
 const NewsReview = () => {
   const [reviews,setReviews]=useState([])
@@ -81,7 +83,8 @@ const NewsReview = () => {
 
   return (
     <>
-      <UserHeader />
+    <AdminNavbar/>
+      <OperationHeader/>
       {/* Page content */}
       <Container className="mt--7" fluid>
         <Row>
@@ -184,6 +187,7 @@ const NewsReview = () => {
           </Col>
         </Row>
       </Container>
+      <Footer/>
     </>
   );
 };

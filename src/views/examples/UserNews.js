@@ -12,8 +12,9 @@ import {
 } from "reactstrap";
 // core components
 import { useState, useEffect } from "react";
-import Header from "components/Navbars/Header";
+import UserOperationHeader from "components/Navbars/UserOperationHeader";
 import UserNewsArticle from "./UsernewsArticle";
+import UserNavbar from "components/sharedNavbar/UserNavbar";
 
 const UserNews = () => {
     const [news, setNews] = useState([])
@@ -45,7 +46,8 @@ const UserNews = () => {
 
     return (
         <>
-            <Header />
+        <UserNavbar/>
+            <UserOperationHeader/>
             <Container className="mt--7 py-7 fill-white" fluid >
                 <Row>
                     <Col xs="10">
