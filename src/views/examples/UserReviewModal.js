@@ -59,7 +59,7 @@ const UserReviewModal = ({ toggleModal, setShowModal, modalState,setFeedback,sho
         >
             <div className="modal-header">
                 <h6 className="modal-title" id="modal-title-default">
-                    Attention!!
+                    Add Review!!
                 </h6>
                 <button
                     aria-label="Close"
@@ -75,42 +75,12 @@ const UserReviewModal = ({ toggleModal, setShowModal, modalState,setFeedback,sho
                 <Card className="bg-secondary shadow border-0">
                     <CardHeader className="bg-white pb-5">
                         <div className="text-muted text-center mb-3">
-                            <small>Sign in with</small>
-                        </div>
-                        <div className="btn-wrapper text-center">
-                            <Button
-                                className="btn-icon mt-2 mb-2"
-                                color="neutral"
-                                href="#pablo"
-                                onClick={(e) => e.preventDefault()}
-                            >
-                                <span className="btn-inner--icon mr-1">
-                                    <img
-                                        alt="..."
-                                        src={require("assets/img/icons/common/github.svg")}
-                                    />
-                                </span>
-                                <span className="btn-inner--text">Github</span>
-                            </Button>
-                            <Button
-                                className="btn-icon mt-2 mb-2 ml-1"
-                                color="neutral"
-                                href="#pablo"
-                                onClick={(e) => e.preventDefault()}
-                            >
-                                <span className="btn-inner--icon mr-1">
-                                    <img
-                                        alt="..."
-                                        src={require("assets/img/icons/common/google.svg")}
-                                    />
-                                </span>
-                                <span className="btn-inner--text">Google</span>
-                            </Button>
+                            <small>use these fields to add your review</small>
                         </div>
                     </CardHeader>
                     <CardBody className="px-lg-5 py-lg-5">
                         <div className="text-center text-muted mb-4">
-                            <small>Or sign in with credentials</small>
+                            <small>review</small>
                         </div>
                         <Form role="form" onSubmit={addReview}>
                             <FormGroup

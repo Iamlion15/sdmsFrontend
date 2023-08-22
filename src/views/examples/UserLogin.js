@@ -1,20 +1,4 @@
-/*!
 
-=========================================================
-* Argon Dashboard React - v1.2.3
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-dashboard-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/argon-dashboard-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
 import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import LoginModal from "./LoginModal";
@@ -131,7 +115,7 @@ const UserLogin = () => {
                     <Button
                       className="btn-neutral btn-icon"
                       color="default"
-                      onClick={(e) => e.preventDefault()}
+                      onClick={() => navigate("/")}
                     >
                       <span className="btn-inner--icon mr-1">
                         <img
@@ -142,13 +126,12 @@ const UserLogin = () => {
                           }
                         />
                       </span>
-                      <span className="btn-inner--text">Github</span>
+                      <span className="btn-inner--text">Admin</span>
                     </Button>
                     <Button
                       className="btn-neutral btn-icon ml-1"
                       color="default"
-                      href="#pablo"
-                      onClick={(e) => e.preventDefault()}
+                      onClick={() => navigate("/user/login")}
                     >
                       <span className="btn-inner--icon mr-1">
                         <img
@@ -159,7 +142,7 @@ const UserLogin = () => {
                           }
                         />
                       </span>
-                      <span className="btn-inner--text">Google</span>
+                      <span className="btn-inner--text">OGS personnel</span>
                     </Button>
                   </div>
                 </CardHeader>
@@ -235,14 +218,13 @@ const UserLogin = () => {
                     href="#pablo"
                     onClick={(e) => e.preventDefault()}
                   >
-                    <small>Forgot password?</small>
+                    
                   </a>
                 </Col>
                 <Col className="text-right" xs="6">
                   <a
                     className="text-light"
-                    href="#pablo"
-                    onClick={(e) => e.preventDefault()}
+                    onClick={() =>navigate("/user/register-page")}
                   >
                     <small>Create new account</small>
                   </a>

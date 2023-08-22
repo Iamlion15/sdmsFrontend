@@ -5,10 +5,15 @@ import {
     Col,
     Row,
 } from "reactstrap"
-
+import GeneralReport from "Generalreport/generateReport";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 const OperationHeader = () => {
+    const [showReport,setShowReport]=useState(false)
+    const toggleShowReport =() => {
+        setShowReport(!showReport);
+      };
     const navigate=useNavigate()
     return (
         <div className="header bg-gradient-beach pb-8 pt-5 pt-md-8">
@@ -51,7 +56,7 @@ const OperationHeader = () => {
 
                                                     <a
                                                         className="text-success"
-                                                        onClick={() => navigate("privileges")}
+                                                        onClick={() => navigate("/admin/privileges")}
                                                     >
                                                         Learn more
                                                     </a>
@@ -71,23 +76,16 @@ const OperationHeader = () => {
                                                 </div>
                                                 <div className="pl-4">
                                                     <h5 className="title text-success">
-                                                        Total number of reviews
+                                                        General report
                                                     </h5>
                                                     <p>
-                                                        10 reviews
-                                                    </p>
-                                                    <h5 className="title text-success">
-                                                        Reviews per number of articles
-                                                    </h5>
-                                                    <p>
-                                                        5 reviews
+                                                        report
                                                     </p>
                                                     <a
                                                         className="text-success"
-                                                        href="#pablo"
-                                                        onClick={()=>navigate("news")}
+                                                        onClick={toggleShowReport}
                                                     >
-                                                        Learn more
+                                                        Generate report
                                                     </a>
                                                 </div>
                                             </div>
@@ -118,7 +116,7 @@ const OperationHeader = () => {
                                                     </p>
                                                     <a
                                                         className="text-success"
-                                                        onClick={() => navigate("dashboard")}
+                                                        onClick={() => navigate("/admin/dashboard")}
                                                     >
                                                         Learn more
                                                     </a>
@@ -146,6 +144,9 @@ const OperationHeader = () => {
                             points="2560 0 2560 100 0 100"
                         />
                     </svg>
+                </div>
+                <div>
+                    <GeneralReport setShowModal={setShowReport} toggleModal={toggleShowReport} modalState={showReport}/>
                 </div>
         </div>
     )

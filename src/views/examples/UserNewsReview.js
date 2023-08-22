@@ -13,7 +13,6 @@ import {
   Alert
 } from "reactstrap";
 // core components
-import UserHeader from "components/Navbars/UserHeader.js";
 import Review from "./review";
 import { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";

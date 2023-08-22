@@ -1,20 +1,4 @@
-/*!
 
-=========================================================
-* Argon Design System React - v1.1.2
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-design-system-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/argon-design-system-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
@@ -25,7 +9,7 @@ import "assets/scss/argon-design-system-react.scss?v1.1.0";
 import "assets/vendor/nucleo/css/nucleo.css";
 
 
-import Index from "views/Index.js";
+
 // import Landing from "views/examples/Landing.js";
 import Table from "views/examples/usersTable.js";
 import Login from "views/examples/Login"
@@ -38,7 +22,8 @@ import UserLogin from "views/examples/UserLogin";
 import UserNews from "views/examples/UserNews";
 import UserNewsReview from "views/examples/UserNewsReview";
 import Indexii from "report/Indexiii";
-import DataTranscoder from "variables/dataTranscoder";
+import UserCharts from "report/IndexiiiUser";
+import Pdf from "Generalreport/pdf";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -53,6 +38,7 @@ root.render(
       <Route path="/admin/users" exact element={<Table />} />
       <Route path="/admin/news" exact element={<News />} />
       <Route path="/charts" exact element={<Indexii />} />
+      <Route path="/user/charts" exact element={<UserCharts/>}/>
       <Route path="news/review/:id" exact element={<NewsReview/>}/>
       <Route path="/admin/privileges" exact element={<PrivilegeTable/>} />
       <Route path="/updateuser/:id" exact element={<UpdateUser/>}/>

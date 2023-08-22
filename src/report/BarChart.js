@@ -14,6 +14,7 @@ import {
     CardFooter
 } from "reactstrap";
 
+
 const Barchart = ({ chartExample2 }) => {
     const [positive, setPositive] = useState([]);
     const [negative, setNegative] = useState([]);
@@ -131,7 +132,7 @@ const Barchart = ({ chartExample2 }) => {
                             <h6 className="text-uppercase text-muted ls-1 mb-1">
                                 Sentiment analysis
                             </h6>
-                            <h2 className="mb-0">Neutral Sentiments </h2>
+                            <h2 className="mb-0">news Sentiments </h2>
                         </div>
                         <div className="col">
                             <Nav className="justify-content-end" pills>

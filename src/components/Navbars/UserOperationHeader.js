@@ -40,18 +40,18 @@ const UserOperationHeader = () => {
                                                         Number of reviews submitted
                                                     </h5>
                                                     <p>
-                                                        8 users
+                                                        8 reviews
                                                     </p>
                                                     <h5 className="title text-success">
-                                                        pending Users
+                                                        other  users reviews
                                                     </h5>
                                                     <p>
-                                                        5 users
+                                                        charts
                                                     </p>
 
                                                     <a
                                                         className="text-success"
-                                                        onClick={() => navigate("privileges")}
+                                                        onClick={() => navigate("/user/charts")}
                                                     >
                                                         Learn more
                                                     </a>
@@ -85,7 +85,7 @@ const UserOperationHeader = () => {
                                                     <a
                                                         className="text-success"
                                                         href="#pablo"
-                                                        onClick={()=>navigate("news")}
+                                                        onClick={()=>navigate("/user/news")}
                                                     >
                                                         Learn more
                                                     </a>
@@ -118,7 +118,7 @@ const UserOperationHeader = () => {
                                                     </p>
                                                     <a
                                                         className="text-success"
-                                                        onClick={() => navigate("dashboard")}
+                                                        onClick={() => navigate("/user/charts")}
                                                     >
                                                         Learn more
                                                     </a>

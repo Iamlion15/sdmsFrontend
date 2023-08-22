@@ -1,5 +1,5 @@
 
-import { useState,useRef } from "react";
+import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import RegisterModal from "./RegisterModal";
 
@@ -32,16 +32,16 @@ const Register = () => {
     password: ""
   });
   const [msg, setMsg] = useState("");
-  const [showRegister,setShowRegister]=useState(false)
-  const timeoutRef=useRef(null);
-  const [visible,setVisible]=useState(false)
-  const closeAlert=()=>{
+  const [showRegister, setShowRegister] = useState(false)
+  const timeoutRef = useRef(null);
+  const [visible, setVisible] = useState(false)
+  const closeAlert = () => {
     setVisible(false);
   }
-  const showAlert=()=>{
+  const showAlert = () => {
     setVisible(true);
     clearTimeout(timeoutRef.current)
-    timeoutRef.current=setTimeout(closeAlert,2000)  ;
+    timeoutRef.current = setTimeout(closeAlert, 2000);
   }
   const toggleRegister = () => {
     setShowRegister(!showRegister);
@@ -63,13 +63,12 @@ const Register = () => {
           console.log(response);
           console.log("INVALID EMAIL OR PASSWORD");
           setMsg("INVALID CREDENTIALS")
-          if(response.status==405)
-          {
+          if (response.status == 405) {
             showAlert();
           }
         }
-        else{
-          if(response.ok){
+        else {
+          if (response.ok) {
             toggleRegister();
           }
         }
@@ -96,16 +95,15 @@ const Register = () => {
           <Row className="justify-content-center">
             <Col lg="5">
               <Card className="bg-secondary shadow border-0">
-                <CardHeader className="bg-white pb-3">
+                <CardHeader className="bg-white pb-5">
                   <div className="text-muted text-center mb-3">
-                    <small>Sign up with</small>
+                    <small>Sign in with</small>
                   </div>
-                  <div className="text-center">
+                  <div className="btn-wrapper text-center">
                     <Button
-                      className="btn-neutral btn-icon mr-4"
+                      className="btn-neutral btn-icon"
                       color="default"
-                      href="#pablo"
-                      onClick={(e) => e.preventDefault()}
+                      onClick={() => navigate("/")}
                     >
                       <span className="btn-inner--icon mr-1">
                         <img
@@ -116,13 +114,12 @@ const Register = () => {
                           }
                         />
                       </span>
-                      <span className="btn-inner--text">Github</span>
+                      <span className="btn-inner--text">Admin</span>
                     </Button>
                     <Button
                       className="btn-neutral btn-icon ml-1"
                       color="default"
-                      href="#pablo"
-                      onClick={(e) => e.preventDefault()}
+                      onClick={() => navigate("/user/login")}
                     >
                       <span className="btn-inner--icon mr-1">
                         <img
@@ -133,12 +130,12 @@ const Register = () => {
                           }
                         />
                       </span>
-                      <span className="btn-inner--text">Google</span>
+                      <span className="btn-inner--text">OGS personnel</span>
                     </Button>
                   </div>
                 </CardHeader>
                 <CardBody className="px-lg-5 py-lg-5">
-                {msg && visible &&(
+                  {msg && visible && (
                     <Alert color="danger" fade={true} isOpen={visible}>
                       <span className="alert-inner--icon">
                         <i className="ni ni-bell-55" />
@@ -254,7 +251,7 @@ const Register = () => {
       </section>
       {/* register modal */}
       <div>
-        <RegisterModal setShowModal={setShowRegister} toggleModal={toggleRegister} modalState={showRegister}/>
+        <RegisterModal setShowModal={setShowRegister} toggleModal={toggleRegister} modalState={showRegister} />
       </div>
     </>
   );

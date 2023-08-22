@@ -1,20 +1,4 @@
-/*!
 
-=========================================================
-* Argon Dashboard React - v1.2.3
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-dashboard-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/argon-dashboard-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 // reactstrap components
@@ -35,6 +19,7 @@ import {
   Alert
 } from "reactstrap";
 // core components
+
 
 const Login = () => {
   const [data, setData] = useState({
@@ -102,7 +87,7 @@ const Login = () => {
                     <Button
                       className="btn-neutral btn-icon"
                       color="default"
-                      onClick={(e) => e.preventDefault()}
+                      onClick={() => navigate("/")}
                     >
                       <span className="btn-inner--icon mr-1">
                         <img
@@ -118,8 +103,7 @@ const Login = () => {
                     <Button
                       className="btn-neutral btn-icon ml-1"
                       color="default"
-                      href="#pablo"
-                      onClick={(e) => e.preventDefault()}
+                      onClick={() => navigate("/user/login")}
                     >
                       <span className="btn-inner--icon mr-1">
                         <img
@@ -138,7 +122,7 @@ const Login = () => {
                   <div className="text-center text-muted mb-4">
                     <small>Or sign in with credentials</small>
                   </div>
-                  
+
                   {!(msg === "") && (
                     <Alert color="danger" fade={false}>
                       <span className="alert-inner--icon">
@@ -159,7 +143,7 @@ const Login = () => {
                           </InputGroupText>
                         </InputGroupAddon>
                         <Input placeholder="Username" type="text"
-                        onChange={(e) => setData({ ...data, username: e.target.value })}
+                          onChange={(e) => setData({ ...data, username: e.target.value })}
                         />
                       </InputGroup>
                     </FormGroup>
@@ -192,34 +176,14 @@ const Login = () => {
                       </label>
                     </div>
                     <div className="text-center">
-                    <input type="submit" 
-                    className="my-4 btn btn-success" 
-                    color="primary" 
-                    value="sign in"/>
+                      <input type="submit"
+                        className="my-4 btn btn-success"
+                        color="primary"
+                        value="sign in" />
                     </div>
                   </Form>
                 </CardBody>
               </Card>
-              <Row className="mt-3">
-                <Col xs="6">
-                  <a
-                    className="text-light"
-                    href="#pablo"
-                    onClick={(e) => e.preventDefault()}
-                  >
-                    <small>Forgot password?</small>
-                  </a>
-                </Col>
-                <Col className="text-right" xs="6">
-                  <a
-                    className="text-light"
-                    href="#pablo"
-                    onClick={(e) => e.preventDefault()}
-                  >
-                    <small>Create new account</small>
-                  </a>
-                </Col>
-              </Row>
             </Col>
           </Row>
         </Container>

@@ -7,24 +7,14 @@ import classnames from "classnames";
 // javascipt plugin for creating charts
 import Chart from "chart.js";
 // react plugin used to create charts
-import { Line, Bar } from "react-chartjs-2";
 import Barchart from "./BarChart";
 import ArticleContribution from "./ArticleContribution";
 import ArticleMetaInfo from "./ArticleMetaInfo";
-import AdminNavbar from "components/sharedNavbar/Navbar";
-import OperationHeader from "components/Navbars/OperationHeader";
+import UserNavbar from "components/sharedNavbar/UserNavbar";
+import UserOperationHeader from "components/Navbars/UserOperationHeader";
 import Footer from "components/Footers/Footer";
 // reactstrap components
 import {
-  Button,
-  Card,
-  CardHeader,
-  CardBody,
-  NavItem,
-  NavLink,
-  Nav,
-  Progress,
-  Table,
   Container,
   Row,
   Col,
@@ -37,10 +27,8 @@ import {
   chartExample1,
   chartExample2,
 } from "../variables/charts";
-import Header from "components/Navbars/Header.js";
 
-
-const Indexii = (props) => {
+const UserCharts = (props) => {
   const [activeNav, setActiveNav] = useState(1);
   const [chartExample1Data, setChartExample1Data] = useState("data1");
 
@@ -56,9 +44,9 @@ const Indexii = (props) => {
   return (
     <>
       {/* Page content */}
-      <AdminNavbar/>
+      <UserNavbar/>
       {/* <Header /> */}
-      <OperationHeader/>
+      <UserOperationHeader/>
       <Container className="mt--7" fluid>
         <Row>
           <Col className="mb-5 mb-xl-0" xl="8">
@@ -82,4 +70,4 @@ const Indexii = (props) => {
   );
 };
 
-export default Indexii;
+export default UserCharts;
