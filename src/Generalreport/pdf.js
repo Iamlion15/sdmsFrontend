@@ -18,10 +18,18 @@ const PdfReviews = ({ dates, data, setShow }) => {
     return (
         <div>
             <PDFExport ref={pdfExportComponent} paperSize="A4">
-                <div style={{ textAlign: 'center', margin: '20px' }}>
-                    <h1 style={{ color: 'black' }}><em>ELECTRONIC JOURNAL SENTIMENT ANALYSIS</em></h1>
+            <div style={{ textAlign: 'center', margin: '20px' }}>
+                    {/* Logo */}
+                    <img src={require("../assets/img/theme/ogslogo.png")} alt="Logo" style={{ width: '100px', height: '100px' }} />
+                    <div style={{ marginTop: '10px' }}>
+                        <h1 style={{ color: 'black', margin: '0', padding: '10px 0' }}>
+                            <em>ELECTRONIC JOURNAL SENTIMENT ANALYSIS</em>
+                        </h1>
+                        <p style={{ margin: '0', fontSize: '14px' }}>Kigali, Rwanda</p>
+                        <p style={{ margin: '0', fontSize: '14px' }}>Kimihurura, Gasabo</p>
+                    </div>
                     <hr />
-                    <h1>Review Report of {formattedDate}</h1>
+                    <h1>Report on {formattedDate}</h1>
                 </div>
                 <h3>Start date: {dates.startDate} | End date: {dates.endDate}</h3>
                 <hr />
@@ -54,6 +62,7 @@ const PdfReviews = ({ dates, data, setShow }) => {
                     </tbody>
                 </table>
                 <div style={{ marginTop: '200px', textAlign: 'center' }}>
+                    <p>Printed by Rukundo Wellars</p><br/>
                       Kigali, Rwanda Done on {formattedDate}
                     <p style={{ color: 'black' }}> {new Date().getFullYear()} Electronic Journal Sentiment Analysis</p>
                 </div>

@@ -91,21 +91,28 @@ const UserLogin = () => {
   }
   return (
     <>
-      {/* Page content */}
-      <section className="section section-shaped section-lg">
-        <div className="shape shape-style-1 bg-gradient-default">
-          <span />
-          <span />
-          <span />
-          <span />
-          <span />
-          <span />
-          <span />
-          <span />
-        </div>
+    <Row>
+      <Col>
+      <section className="section section-lg bg-gradient-beach">
+            <Container className="pt-lg pb-300">
+              <Row className="text-center justify-content-center">
+                <Col lg="10">
+                  <h1 className="display-3 text-white">ELECTRONIC JOURNAL SENTIMENT ANALYSIS</h1>
+                  <p className="lead text-white">
+                  "Discover the power of Electronic Journal Sentiment Analysis. 
+                  Access newspapers discussing Rwanda, contribute your insights through authorized reviews,
+                   and unlock comprehensive reports enriched with statistical analysis. 
+                  </p>
+                </Col>
+              </Row>
+            </Container>
+          </section>
+          
+    </Col>
+        <Col>
         <Container className="pt-lg-7">
           <Row className="justify-content-center">
-            <Col lg="5">
+            <Col>
               <Card className="bg-secondary shadow border-0">
                 <CardHeader className="bg-white pb-5">
                   <div className="text-muted text-center mb-3">
@@ -115,7 +122,7 @@ const UserLogin = () => {
                     <Button
                       className="btn-neutral btn-icon"
                       color="default"
-                      onClick={() => navigate("/")}
+                      onClick={() => navigate("/admin/login")}
                     >
                       <span className="btn-inner--icon mr-1">
                         <img
@@ -148,7 +155,7 @@ const UserLogin = () => {
                 </CardHeader>
                 <CardBody className="px-lg-5 py-lg-5">
                   <div className="text-center text-muted mb-4">
-                    <small>Or sign in with credentials</small>
+                  <h3 className="display-5">OGS Personnel login</h3>
                   </div>
 
                   {msg && visible && (
@@ -233,7 +240,8 @@ const UserLogin = () => {
             </Col>
           </Row>
         </Container>
-      </section>
+        </Col>
+      </Row>
       <div>
         <LoginModal setShowModal={setShowModal} toggleModal={toggleModal} modalState={showModal} />
       </div>

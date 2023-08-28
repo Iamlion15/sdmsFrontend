@@ -1,6 +1,8 @@
 import { useState } from "react";
 import PdfReviewReport from "./PdfReviewReport";
-
+import {
+    Button,
+  } from "reactstrap";
 
 const AnalysisReport = () => {
     const [reviewers, setReviewers] = useState({});
@@ -28,8 +30,11 @@ const AnalysisReport = () => {
             const responses = await Promise.all(requests);
             const data = await Promise.all(responses.map((response) => response.json()));
             setReviewers(data[0]);
-            setArticleStats(data[1])
-            setReviewed(data[2])
+            setArticleStats(data[2])
+            setReviewed(data[1])
+            console.log(articleStats);
+            console.log(reviewed)
+            toggleShowPrint()
         } catch (error) {
             console.error(error.message);
         }
@@ -40,7 +45,7 @@ const AnalysisReport = () => {
                 Generate
             </Button>
             {showPrint && (
-                <PdfReviewReport setShow={toggleShowPrint} reviewers={data} stats={articleStats} reviewed={reviewed} />
+                <PdfReviewReport setShow={toggleShowPrint} reviewers={reviewers} stats={articleStats} reviewed={reviewed} />
             )}
         </>
     )

@@ -1,0 +1,60 @@
+/* LandingPage.css */
+.landing-page {
+    padding: 0;
+
+  }
+/* LandingPage.css */
+.hero-section {
+  position: relative;
+  width: 100%;
+}
+
+.dark-overlay {
+  background-color: rgba(0, 0, 0, 0.7);
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+.hero-text {
+  color: #fff;
+  text-align: center;
+  max-width: 500px;
+  z-index: 1;
+}
+
+.hero-text h1 {
+  font-size: 3.5rem;
+  margin-bottom: 1rem;
+}
+
+.hero-text p {
+  font-size: 1.8rem; /* Adjust the font size as needed */
+  margin-bottom: 2rem;
+  color: white; /* Set the text color to white */
+}
+
+.hero-text button {
+  font-size: 1.6rem;
+  padding: 12px 40px;
+  background-color: #FF5733;
+  border-color: transparent;
+}
+
+/* Add more styling as needed */
+
+  
+  .hero-image {
+    background: url('../img/theme/EJSABACKGROUND2.jpg') center/cover; ;
+    height: 80vh;
+    width:100%; /* Set the desired height */
+  }
+  .feature {
+    text-align: center;
+    padding: 2rem;
+  }
+  
+ 
+  

@@ -1,4 +1,4 @@
-import  { useState } from "react";
+import { useState } from "react";
 import {
   Card,
   CardBody,
@@ -11,6 +11,7 @@ import {
 import classnames from "classnames";
 import DateReview from "./DateofReview";
 import AnalysisReport from "./AnalysisReport";
+import IndividualPaperSentimentReport from "./individualPaperReport";
 
 const ReportMenu = () => {
   const [activeTab, setActiveTab] = useState(1);
@@ -43,7 +44,7 @@ const ReportMenu = () => {
               onClick={() => toggleTab(1)}
               role="tab"
             >
-              Review report
+              period review report
             </NavLink>
           </NavItem>
           <NavItem>
@@ -55,7 +56,7 @@ const ReportMenu = () => {
               onClick={() => toggleTab(2)}
               role="tab"
             >
-              Profile
+              User review report
             </NavLink>
           </NavItem>
           <NavItem>
@@ -76,23 +77,17 @@ const ReportMenu = () => {
         <CardBody>
           {activeTab === 1 && (
             <TabPane>
-              <DateReview/>
+              <DateReview />
             </TabPane>
           )}
           {activeTab === 2 && (
             <TabPane>
-              <AnalysisReport/>
+              <AnalysisReport />
             </TabPane>
           )}
           {activeTab === 3 && (
             <TabPane>
-              <p className="description">
-                Raw denim you probably haven't heard of them jean shorts Austin.
-                Nesciunt tofu stumptown aliqua, retro synth master cleanse.
-                Mustache cliche tempor, williamsburg carles vegan helvetica.
-                Reprehenderit butcher retro keffiyeh dreamcatcher synth.
-              </p>
-            </TabPane>
+              <IndividualPaperSentimentReport />            </TabPane>
           )}
         </CardBody>
       </Card>

@@ -23,7 +23,7 @@ import UserNews from "views/examples/UserNews";
 import UserNewsReview from "views/examples/UserNewsReview";
 import Indexii from "report/Indexiii";
 import UserCharts from "report/IndexiiiUser";
-import Pdf from "Generalreport/pdf";
+import LandingPage from "views/examples/LandingPage";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -44,8 +44,9 @@ root.render(
       <Route path="/updateuser/:id" exact element={<UpdateUser/>}/>
       <Route path="*" element={<Navigate to="/" replace />} />
       <Route path="/admin/dashboard" exact element={<Indexii />} />
-      <Route path="/" exact element={<Login/>} />
+      <Route path="/admin/login" exact element={<Login/>} />
       <Route path="/user/login" exact element={<UserLogin/>} />
+      <Route path="/" exact element={<LandingPage/>}/>
 
     </Routes>
   </BrowserRouter>
