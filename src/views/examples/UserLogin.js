@@ -1,12 +1,12 @@
 
 import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import LoginModal from "./LoginModal";
 // reactstrap components
 import {
-  Button,
+  Container,
+  Row,
+  Col,
   Card,
-  CardHeader,
   CardBody,
   FormGroup,
   Form,
@@ -14,9 +14,6 @@ import {
   InputGroupAddon,
   InputGroupText,
   InputGroup,
-  Container,
-  Row,
-  Col,
   Alert
 } from "reactstrap";
 // core components
@@ -27,6 +24,7 @@ const UserLogin = () => {
     password: ""
   });
   const [msg, setMsg] = useState("");
+  const [role, setRole] = useState("")
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false)
   const timeoutRef = useRef(null);
@@ -51,19 +49,23 @@ const UserLogin = () => {
         "content-type": "application/JSON",
       },
     };
-    fetch("http://localhost:8000/api/user/login", methodOptions)
+    let url;
+    console.log(role)
+    if (role === "RAB") {
+      url = "http://localhost:5000/api/rab/login"
+    }
+    else {
+      if (role === "agro dealer") {
+        url = "http://localhost:5000/api/agro/login"
+      }
+    }
+    
+    fetch(url, methodOptions)
       .then((response) => {
         if (!response.ok) {
-          if (response.status == 401) {
-            console.log("INVALID EMAIL OR PASSWORD");
-            setMsg("INVALID EMAIL OR PASSWORD")
-            showAlert();
-          }
-          else {
-            if (response.status == 403) {
-              toggleModal();
-            }
-          }
+          console.log("INVALID EMAIL OR PASSWORD");
+          setMsg("INVALID EMAIL OR PASSWORD")
+          showAlert();
         }
         else {
           if (response.ok) {
@@ -72,17 +74,24 @@ const UserLogin = () => {
         }
       })
       .then((value) => {
-        if (value.message == "200") {
+        console.log(value)
+        if (value.hasOwnProperty("token")) {
           localStorage.setItem("token", JSON.stringify(value.token))
-          localStorage.setItem("nid",data.nid)
-          console.log(localStorage.getItem("token"))
-          if (value.hasOwnProperty("token")) {
-            navigate("/user/news")
+          if(role=="agro dealer")
+          {
+            navigate("/agro/requestseed")
+          }
+          else{
+            if(role=="RAB")
+            {
+              navigate("/rab/stock")
+            }
+          }
+            
           }
           else {
-            setMsg("incorrect password or email")
+            setMsg("Incorrect password or email")
           }
-        }
       })
       .catch((error) => {
         setMsg("unexpected error occured");
@@ -91,160 +100,113 @@ const UserLogin = () => {
   }
   return (
     <>
-    <Row>
-      <Col>
-      <section className="section section-lg bg-gradient-beach">
+      <Row>
+        <Col>
+          <section className="section section-lg bg-gradient-beach">
             <Container className="pt-lg pb-300">
               <Row className="text-center justify-content-center">
                 <Col lg="10">
-                  <h1 className="display-3 text-white">ELECTRONIC JOURNAL SENTIMENT ANALYSIS</h1>
+                  <h1 className="display-3 text-white">SEED DISTRIBUTION MANAGEMENT SYSTEM</h1>
                   <p className="lead text-white">
-                  "Discover the power of Electronic Journal Sentiment Analysis. 
-                  Access newspapers discussing Rwanda, contribute your insights through authorized reviews,
-                   and unlock comprehensive reports enriched with statistical analysis. 
+                    """
                   </p>
                 </Col>
               </Row>
             </Container>
           </section>
-          
-    </Col>
-        <Col>
-        <Container className="pt-lg-7">
-          <Row className="justify-content-center">
-            <Col>
-              <Card className="bg-secondary shadow border-0">
-                <CardHeader className="bg-white pb-5">
-                  <div className="text-muted text-center mb-3">
-                    <small>Sign in with</small>
-                  </div>
-                  <div className="btn-wrapper text-center">
-                    <Button
-                      className="btn-neutral btn-icon"
-                      color="default"
-                      onClick={() => navigate("/admin/login")}
-                    >
-                      <span className="btn-inner--icon mr-1">
-                        <img
-                          alt="..."
-                          src={
-                            require("assets/img/icons/common/github.svg")
-                              .default
-                          }
-                        />
-                      </span>
-                      <span className="btn-inner--text">Admin</span>
-                    </Button>
-                    <Button
-                      className="btn-neutral btn-icon ml-1"
-                      color="default"
-                      onClick={() => navigate("/user/login")}
-                    >
-                      <span className="btn-inner--icon mr-1">
-                        <img
-                          alt="..."
-                          src={
-                            require("assets/img/icons/common/google.svg")
-                              .default
-                          }
-                        />
-                      </span>
-                      <span className="btn-inner--text">OGS personnel</span>
-                    </Button>
-                  </div>
-                </CardHeader>
-                <CardBody className="px-lg-5 py-lg-5">
-                  <div className="text-center text-muted mb-4">
-                  <h3 className="display-5">OGS Personnel login</h3>
-                  </div>
-
-                  {msg && visible && (
-                    <Alert color="danger" fade={true} isOpen={visible}>
-                      <span className="alert-inner--icon">
-                        <i className="ni ni-bell-55" />
-                      </span>
-                      <span className="alert-inner--text ml-1">
-                        EMAIL OR ID NUMBER HAS BEEN ALREADY USED!
-                      </span>
-                    </Alert>
-                  )}
-                  <Form role="form" onSubmit={loginHandler}>
-                    <FormGroup className="mb-3">
-                      <InputGroup className="input-group-alternative">
-                        <InputGroupAddon addonType="prepend">
-                          <InputGroupText>
-                            <i className="ni ni-email-83" />
-                          </InputGroupText>
-                        </InputGroupAddon>
-                        <Input placeholder="NATIONAL IDENTITY" type="text"
-                          onChange={(e) => setData({ ...data, nid: e.target.value })}
-                        />
-                      </InputGroup>
-                    </FormGroup>
-                    <FormGroup>
-                      <InputGroup className="input-group-alternative">
-                        <InputGroupAddon addonType="prepend">
-                          <InputGroupText>
-                            <i className="ni ni-lock-circle-open" />
-                          </InputGroupText>
-                        </InputGroupAddon>
-                        <Input
-                          placeholder="Password"
-                          type="password"
-                          autoComplete="off"
-                          onChange={(e) => setData({ ...data, password: e.target.value })}
-                        />
-                      </InputGroup>
-                    </FormGroup>
-                    <div className="custom-control custom-control-alternative custom-checkbox">
-                      <input
-                        className="custom-control-input"
-                        id=" customCheckLogin"
-                        type="checkbox"
-                      />
-                      <label
-                        className="custom-control-label"
-                        htmlFor=" customCheckLogin"
-                      >
-                        <span>Remember me</span>
-                      </label>
-                    </div>
-                    <div className="text-center">
-                      <input type="submit"
-                        className="my-4 btn btn-success"
-                        color="primary"
-                        value="sign in" />
-                    </div>
-                  </Form>
-                </CardBody>
-              </Card>
-              <Row className="mt-3">
-                <Col xs="6">
-                  <a
-                    className="text-light"
-                    href="#pablo"
-                    onClick={(e) => e.preventDefault()}
-                  >
-                    
-                  </a>
-                </Col>
-                <Col className="text-right" xs="6">
-                  <a
-                    className="text-light"
-                    onClick={() =>navigate("/user/register-page")}
-                  >
-                    <small>Create new account</small>
-                  </a>
-                </Col>
-              </Row>
-            </Col>
-          </Row>
-        </Container>
         </Col>
-      </Row>
-      <div>
-        <LoginModal setShowModal={setShowModal} toggleModal={toggleModal} modalState={showModal} />
-      </div>
+        <Col>
+          <Container className="pt-lg-7">
+            <Row className="justify-content-center">
+              <Col>
+                <Card className="bg-secondary shadow border-0">
+                  <CardBody className="px-lg-5 py-lg-5">
+                    <div className="text-center text-muted mb-4">
+                      <h3 className="display-5">Login</h3>
+                    </div>
+
+                    {msg && visible && (
+                      <Alert color="danger" fade={true} isOpen={visible}>
+                        <span className="alert-inner--icon">
+                          <i className="ni ni-bell-55" />
+                        </span>
+                        <span className="alert-inner--text ml-1">
+                          EMAIL OR ID NUMBER HAS BEEN ALREADY USED!
+                        </span>
+                      </Alert>
+                    )}
+                    <Form role="form" onSubmit={loginHandler}>
+                      <FormGroup className="mb-3">
+                        <InputGroup className="input-group-alternative">
+                          <InputGroupAddon addonType="prepend">
+                            <InputGroupText>
+                              <i className="ni ni-email-83" />
+                            </InputGroupText>
+                          </InputGroupAddon>
+                          <Input placeholder="email"
+                            type="text"
+                            onChange={(e) => setData({ ...data, email: e.target.value })}
+                          />
+                        </InputGroup>
+                      </FormGroup>
+                      <FormGroup>
+                        <label htmlFor="role">Who are you?</label>
+                        <select
+                          id="password"
+                          className="form-control"
+                          onChange={(e) => setRole(e.target.value)}
+                        >
+                          <option value="" disabled selected>choose</option>
+                          <option value="agro dealer">Agro dealer</option>
+                          <option value="RAB">RAB</option>
+                        </select>
+                      </FormGroup>
+                      <FormGroup>
+                        <InputGroup className="input-group-alternative">
+                          <InputGroupAddon addonType="prepend">
+                            <InputGroupText>
+                              <i className="ni ni-lock-circle-open" />
+                            </InputGroupText>
+                          </InputGroupAddon>
+                          <Input
+                            placeholder="Password"
+                            type="password"
+                            autoComplete="off"
+                            onChange={(e) => setData({ ...data, password: e.target.value })}
+                          />
+                        </InputGroup>
+                      </FormGroup>
+                      <div className="custom-control custom-control-alternative custom-checkbox">
+                        <input
+                          className="custom-control-input"
+                          id=" customCheckLogin"
+                          type="checkbox"
+                        />
+                      </div>
+                      <div className="text-center">
+                        <input type="submit"
+                          className="my-4 btn btn-success"
+                          color="primary"
+                          value="sign in" />
+                      </div>
+                    </Form>
+                  </CardBody>
+                </Card>
+              </Col>
+            </Row>
+            <Row>
+              <Col className="text-right" xs="6">
+                <a
+                  className="text-light"
+                  onClick={() => navigate("/user/register-page")}
+                >
+                  <small>Create new account</small>
+                </a>
+              </Col>
+            </Row>
+          </Container >
+        </Col>
+      </Row >
     </>
   );
 };

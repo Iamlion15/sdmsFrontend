@@ -1,5 +1,5 @@
 import { useState } from "react";
-import PdfReviewReport from "./PdfReviewReport";
+import PdfReviewReport from "./PdfTransaction";
 import {
     Button,
   } from "reactstrap";

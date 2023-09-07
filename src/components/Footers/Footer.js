@@ -13,7 +13,7 @@ const Footer = () => {
               rel="noopener noreferrer"
               target="_blank"
             >
-              MANZI Kevin Maxime
+              IGIRANEZA NOELLA
             </a>
           </div>
         </Col>
@@ -22,11 +22,11 @@ const Footer = () => {
           <Nav className="nav-footer justify-content-center justify-content-xl-end">
             <NavItem>
               <NavLink
-                href="https://www.minaffet.rw"
+                href="https://www.rab.rw"
                 rel="noopener noreferrer"
                 target="_blank"
               >
-                MINAFFET
+                RAB
               </NavLink>
             </NavItem>
 
@@ -36,19 +36,11 @@ const Footer = () => {
                 rel="noopener noreferrer"
                 target="_blank"
               >
-                OGS
+                MINAGRI
               </NavLink>
             </NavItem>
 
-            <NavItem>
-              <NavLink
-                href="http://www.twitter.com/OGS"
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                OGS Twitter
-              </NavLink>
-            </NavItem>
+            
 
             <NavItem>
               <NavLink

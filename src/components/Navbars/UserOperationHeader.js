@@ -7,9 +7,39 @@ import {
 } from "reactstrap"
 
 import { useNavigate } from "react-router-dom";
+import { useEffect,useState } from "react";
 
 const UserOperationHeader = () => {
     const navigate=useNavigate()
+    const [data,setData]=useState({});
+    const [newsData,setNewsData]=useState({})
+    const getData=async()=>{
+    const requestOptions = {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'x-auth-token': JSON.parse(localStorage.getItem("token")),
+        },
+    }
+    const urls = [
+        'http://localhost:8000/api/user/averagereviews',
+        'http://localhost:8000/api/admin/newsreviewstatus',
+    ];
+    try {
+        const requests = urls.map((url) => fetch(url, requestOptions));
+        const responses = await Promise.all(requests);
+        const data = await Promise.all(responses.map((response) => response.json()));
+        setData(data[0]);
+        setNewsData(data[1])    
+    } catch (error) {
+        console.error(error.message);
+    }
+}
+
+useEffect(()=>{
+    getData()
+},[])
+
     return (
         <div className="header bg-gradient-beach pb-8 pt-5 pt-md-8">
                 <Container>
@@ -37,16 +67,16 @@ const UserOperationHeader = () => {
                                                 </div>
                                                 <div className="pl-4">
                                                     <h5 className="title text-success">
-                                                        Number of reviews submitted
+                                                        Number of reviews you submitted
                                                     </h5>
                                                     <p>
-                                                        8 reviews
+                                                    {data.totalUserReviews} reviews
                                                     </p>
                                                     <h5 className="title text-success">
                                                         other  users reviews
                                                     </h5>
                                                     <p>
-                                                        charts
+                                                        {data.otherUserReviews} reviews
                                                     </p>
 
                                                     <a
@@ -71,16 +101,16 @@ const UserOperationHeader = () => {
                                                 </div>
                                                 <div className="pl-4">
                                                     <h5 className="title text-success">
-                                                        Total number of reviews by other members
+                                                        Total number of reviews 
                                                     </h5>
                                                     <p>
-                                                        10 reviews
+                                                    {data.totalReviewCount} reviews
                                                     </p>
                                                     <h5 className="title text-success">
                                                         Reviews per number of articles
                                                     </h5>
                                                     <p>
-                                                        5 reviews
+                                                        {data.averageReview} reviews
                                                     </p>
                                                     <a
                                                         className="text-success"
@@ -114,7 +144,7 @@ const UserOperationHeader = () => {
                                                         total number of articles
                                                     </h5>
                                                     <p>
-                                                        25 articles
+                                                        {newsData.totalNewsArticle} articles
                                                     </p>
                                                     <a
                                                         className="text-success"

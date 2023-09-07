@@ -10,8 +10,8 @@ import Chart from "chart.js";
 import Barchart from "./BarChart";
 import ArticleContribution from "./ArticleContribution";
 import ArticleMetaInfo from "./ArticleMetaInfo";
-import UserNavbar from "components/sharedNavbar/UserNavbar";
-import UserOperationHeader from "components/Navbars/UserOperationHeader";
+import Navbar from "components/sharedNavbar/Navbar";
+import OperationHeader from "components/Navbars/OperationHeader";
 import Footer from "components/Footers/Footer";
 // reactstrap components
 import {
@@ -44,24 +44,13 @@ const UserCharts = (props) => {
   return (
     <>
       {/* Page content */}
-      <UserNavbar/>
+      <Navbar/>
       {/* <Header /> */}
-      <UserOperationHeader/>
+      <OperationHeader/>
       <Container className="mt--7" fluid>
         <Row>
-          <Col className="mb-5 mb-xl-0" xl="8">
-            <LineChart chartExample1={chartExample1} />
-          </Col>
-          <Col xl="4">
+          <Col xl="10">
             <Barchart chartExample2={chartExample2} />
-          </Col>
-        </Row>
-        <Row className="mt-5">
-          <Col className="mb-5 mb-xl-0" xl="8">
-            <ArticleMetaInfo />
-          </Col>
-          <Col xl="4">
-            <ArticleContribution />
           </Col>
         </Row>
       </Container>

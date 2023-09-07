@@ -1,3 +1,4 @@
+import { useState } from "react"
 import {
     Button,
     Modal,
@@ -8,6 +9,36 @@ from "reactstrap"
 
 
 const DeleteModal=({toggleModal,modalState,data,setShowModal})=>{
+  const [message,setMessage]=useState()
+  const DeleteUser=(id)=>{
+    const us={
+      "nID":id
+    }
+    console.log(id)
+    const requestOptions = {
+      method: 'POST',
+      body:JSON.stringify(us),
+      headers: {
+        'content-Type': 'application/json',
+        'x-auth-token': JSON.parse(localStorage.getItem("token"))
+      },
+    }
+    fetch("http://localhost:8000/api/admin/deleteuser", requestOptions)
+      .then((response) => {
+        if (!response.ok) {
+
+          setMessage("PLEASE RETRY")
+        }
+        return response.json();
+      })
+      .then(value => {
+        window.location.reload()
+      })
+      .catch(error => {
+        console.log(error.message)
+        setMessage("connect your server")
+      })
+  }
     return(
         <>
         <Col md="4" >
@@ -42,7 +73,9 @@ const DeleteModal=({toggleModal,modalState,data,setShowModal})=>{
                 </div>
               </div>
               <div className="modal-footer">
-                <Button className="btn-white" color="default" type="button">
+                <Button className="btn-white" color="default" type="button"
+                onClick={() => DeleteUser(data._id)}
+                >
                   Ok, Delete user
                 </Button>
                 <Button

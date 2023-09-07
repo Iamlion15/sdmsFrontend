@@ -8,15 +8,15 @@ import {
   Row,
   Button,
 } from "reactstrap";
-import PdfReviews from "./pdf";
+import PdfSeedReport from "./pdf";
 
-const DateReview = () => {
+const TransactionReport = () => {
   const [data, setData] = useState({
     startDate: "",
     endDate: "",
   });
   const [showPrint, setShowPrint] = useState(false);
-  const [response, setResponse] = useState({});
+  const [seeds, setSeeds] = useState([]);
   const toggleShowPrint = () => {
     setShowPrint(!showPrint);
   };
@@ -24,7 +24,7 @@ const DateReview = () => {
     event.preventDefault();
 
     try {
-      const response = await fetch('http://localhost:8000/api/admin/reviewsrange', {
+      const response = await fetch('http://localhost:5000/api/rab/getseeds', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -34,7 +34,7 @@ const DateReview = () => {
       });
 
       const responseData = await response.json();
-      setResponse(responseData);
+      setSeeds(responseData);
       toggleShowPrint()
     } catch (error) {
       console.error('Error:', error);
@@ -97,10 +97,10 @@ const DateReview = () => {
         Generate
       </Button>
       {showPrint && (
-        <PdfReviews setShow={toggleShowPrint} dates={data} data={response} />
+        <PdfSeedReport setShow={toggleShowPrint} info={seeds}/>
       )}
     </>
   );
 };
 
-export default DateReview;
+export default TransactionReport;

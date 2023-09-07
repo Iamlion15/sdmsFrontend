@@ -1,11 +1,11 @@
 import { useState } from "react";
-import NewspaperReport from "./newsPaperReport";
+import PdfTransactions from "./TransactionReport";
 import {
     Button,
 } from "reactstrap";
 
-const IndividualPaperSentimentReport = () => {
-    const [articleStats, setArticleStats] = useState([]);
+const Transactions = () => {
+    const [trans, setTrans] = useState([]);
     const [showPrint, setShowPrint] = useState(false);
     const toggleShowPrint = () => {
         setShowPrint(!showPrint);
@@ -19,9 +19,9 @@ const IndividualPaperSentimentReport = () => {
             },
         };
         try {
-            const response = await fetch('http://localhost:8000/api/admin/newspaperstats', requestOptions);
+            const response = await fetch('http://localhost:5000/api/rab/gettrans', requestOptions);
             const responseData = await response.json();
-            setArticleStats(responseData);
+            setTrans(responseData);
             console.log(responseData)
              toggleShowPrint()
 
@@ -35,10 +35,10 @@ const IndividualPaperSentimentReport = () => {
                 Generate
             </Button>
             {showPrint && (
-                <NewspaperReport setShow={toggleShowPrint} data={articleStats}/>
+                <PdfTransactions setShow={toggleShowPrint} info={trans}/>
             )}
         </>
     )
 }
 
-export default IndividualPaperSentimentReport;
+export default Transactions;

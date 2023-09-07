@@ -9,9 +9,8 @@ import {
   Col,
 } from "reactstrap";
 import classnames from "classnames";
-import DateReview from "./DateofReview";
-import AnalysisReport from "./AnalysisReport";
-import IndividualPaperSentimentReport from "./individualPaperReport";
+import TransactionReport from "./PeriodicTransactionReport";
+import Transactions from "./Transactions";
 
 const ReportMenu = () => {
   const [activeTab, setActiveTab] = useState(1);
@@ -44,7 +43,7 @@ const ReportMenu = () => {
               onClick={() => toggleTab(1)}
               role="tab"
             >
-              period review report
+              period transaction report
             </NavLink>
           </NavItem>
           <NavItem>
@@ -56,19 +55,7 @@ const ReportMenu = () => {
               onClick={() => toggleTab(2)}
               role="tab"
             >
-              User review report
-            </NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink
-              aria-selected={activeTab === 3}
-              className={classnames("mb-sm-3 mb-md-0", {
-                active: activeTab === 3,
-              })}
-              onClick={() => toggleTab(3)}
-              role="tab"
-            >
-              Newspaper report
+              transaction
             </NavLink>
           </NavItem>
         </Nav>
@@ -77,18 +64,15 @@ const ReportMenu = () => {
         <CardBody>
           {activeTab === 1 && (
             <TabPane>
-              <DateReview />
+              <TransactionReport />
             </TabPane>
           )}
           {activeTab === 2 && (
             <TabPane>
-              <AnalysisReport />
+              <Transactions />
             </TabPane>
           )}
-          {activeTab === 3 && (
-            <TabPane>
-              <IndividualPaperSentimentReport />            </TabPane>
-          )}
+         
         </CardBody>
       </Card>
     </Col>

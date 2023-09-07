@@ -3,31 +3,62 @@ import {
     CardBody,
     Container,
     Col,
+    Button,
     Row,
 } from "reactstrap"
 import GeneralReport from "Generalreport/generateReport";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState,useEffect } from "react";
+
 
 const OperationHeader = () => {
     const [showReport,setShowReport]=useState(false)
+    const [data,setData]=useState({});
+    const [newsData,setNewsData]=useState({})
     const toggleShowReport =() => {
         setShowReport(!showReport);
       };
     const navigate=useNavigate()
+    const getData=async()=>{
+    const requestOptions = {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'x-auth-token': JSON.parse(localStorage.getItem("token")),
+        },
+    }
+    const urls = [
+        'http://localhost:8000/api/admin/userstatistics',
+        'http://localhost:8000/api/admin/newsreviewstatus',
+    ];
+    try {
+        const requests = urls.map((url) => fetch(url, requestOptions));
+        const responses = await Promise.all(requests);
+        const data = await Promise.all(responses.map((response) => response.json()));
+        setData(data[0]);
+        setNewsData(data[1])    
+    } catch (error) {
+        console.error(error.message);
+    }
+}
+
+useEffect(()=>{
+    getData()
+},[])
+
     return (
-        <div className="header bg-gradient-beach pb-8 pt-5 pt-md-8">
+        <div className="header bg-gradient-beach pb-8 pt-5 pt-md-2">
                 <Container>
                     <Row className="row-grid align-items-center">
                         <Col className="order-lg-1" lg="12">
                             <div className="d-flex px-3">
                                 <div>
                                     <div className="icon icon-lg icon-shape bg-gradient-white shadow rounded-circle text-primary">
-                                        <i className="ni ni-building text-primary" />
+                                        <i className="ni ni-ui-04 text-primary" />
                                     </div>
                                 </div>
                                 <div className="pl-4">
-                                    <h4 className="display-3 text-white">Electronic Journal Sentiment Analysis</h4>
+                                    <h4 className="display-3 text-white">Seed Distribution Management System</h4>
                                 </div>
                             </div>
                             <Row>
@@ -37,29 +68,17 @@ const OperationHeader = () => {
                                             <div className="d-flex px-3">
                                                 <div>
                                                     <div className="icon icon-shape bg-gradient-success rounded-circle text-white">
-                                                        <i className="ni ni-satisfied" />
+                                                        <i className="ni ni-chart-bar-32" />
                                                     </div>
                                                 </div>
                                                 <div className="pl-4">
                                                     <h5 className="title text-success">
-                                                        Registered Users
+                                                        Daily transactions
                                                     </h5>
                                                     <p>
-                                                        8 users
+                                                        {data.totalRegisteredUsers} users
                                                     </p>
-                                                    <h5 className="title text-success">
-                                                        pending Users
-                                                    </h5>
-                                                    <p>
-                                                        5 users
-                                                    </p>
-
-                                                    <a
-                                                        className="text-success"
-                                                        onClick={() => navigate("/admin/privileges")}
-                                                    >
-                                                        Learn more
-                                                    </a>
+                                                    
                                                 </div>
                                             </div>
                                         </CardBody>
@@ -71,22 +90,20 @@ const OperationHeader = () => {
                                             <div className="d-flex px-3">
                                                 <div>
                                                     <div className="icon icon-shape bg-gradient-success rounded-circle text-white">
-                                                        <i className="ni ni-satisfied" />
+                                                        <i className="ni ni-chart-bar-32" />
                                                     </div>
                                                 </div>
                                                 <div className="pl-4">
                                                     <h5 className="title text-success">
                                                         General report
                                                     </h5>
-                                                    <p>
-                                                        report
-                                                    </p>
-                                                    <a
-                                                        className="text-success"
+                                                    
+                                                    <Button
+                                                        color="primary"
                                                         onClick={toggleShowReport}
                                                     >
                                                         Generate report
-                                                    </a>
+                                                    </Button>
                                                 </div>
                                             </div>
                                         </CardBody>
@@ -98,28 +115,16 @@ const OperationHeader = () => {
                                             <div className="d-flex px-3">
                                                 <div>
                                                     <div className="icon icon-shape bg-gradient-success rounded-circle text-white">
-                                                        <i className="ni ni-satisfied" />
+                                                        <i className="ni ni-chart-bar-32" />
                                                     </div>
                                                 </div>
                                                 <div className="pl-4">
-                                                    <h5 className="title text-success">
-                                                        Articles
+                                                <h5 className="title text-success">
+                                                        Monthly transactions
                                                     </h5>
                                                     <p>
-                                                        from different sources
+                                                        {data.noAccessUsersCount} users
                                                     </p>
-                                                    <h5 className="title text-success">
-                                                        total number of articles
-                                                    </h5>
-                                                    <p>
-                                                        25 articles
-                                                    </p>
-                                                    <a
-                                                        className="text-success"
-                                                        onClick={() => navigate("/admin/dashboard")}
-                                                    >
-                                                        Learn more
-                                                    </a>
                                                 </div>
                                             </div>
                                         </CardBody>

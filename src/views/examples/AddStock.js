@@ -1,7 +1,6 @@
 
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useParams } from "react-router-dom";
 import {
   Button,
   Card,
@@ -16,50 +15,26 @@ import {
   Col,
 } from "reactstrap";
 // core components
-import AdminNavbar from "components/sharedNavbar/Navbar";
+import Navbar from "components/sharedNavbar/Navbar";
 import Footer from "components/Footers/Footer";
 import OperationHeader from "components/Navbars/OperationHeader";
-import UpdateModal from "./updateInfoModal";
+import UpdateModal from "./AddStockInfoModal";
 
-const UpdateUser = () => {
+const Addstock = () => {
   const [message, setMessage] = useState('');
   const navigate = useNavigate()
-  const { id } = useParams();
-  const [user, setUser] = useState({})
-  const [showUpdate, setShowUpdate] = useState(false);
-  const toggleUpdate = () => {
-    setShowUpdate(!showUpdate);
-    navigate("/users")
+  const [data, setData] = useState({
+    seedname:"",
+    detail:"",
+    manudate:"",
+    quantity:"",
+    price:""
+  })
+  const [showModal, setShowModal] = useState(false);
+  const toggleModal = () => {
+    setShowModal(!showModal);
+    //navigate("/users")
   };
-  const url = "http://localhost:8000/api/admin/getoneuser/" + id
-  useEffect(() => {
-    const requestOptions = {
-      method: 'GET',
-      headers: {
-        'content-Type': 'application/json',
-        'x-auth-token': JSON.parse(localStorage.getItem("token"))
-      }
-    }
-    fetch(url, requestOptions)
-      .then((response) => {
-        if (!response.ok) {
-          setMessage("PLEASE RETRY")
-        }
-        return response.json();
-      })
-      .then(data => {
-        console.log(data)
-        if (data.code === "yes") {
-          setUser(data.message)
-
-        }
-      })
-      .catch(error => {
-        console.log(error)
-        setMessage("connect your server")
-      })
-  }, [url]);
-
   function submitHandler(e) {
     e.preventDefault();
     const requestOptions = {
@@ -68,17 +43,17 @@ const UpdateUser = () => {
         'content-Type': 'application/json',
         'x-auth-token': JSON.parse(localStorage.getItem("token"))
       },
-      body: JSON.stringify(user)
+      body: JSON.stringify(data)
     }
-    fetch("http://localhost:8000/api/admin/modifyuser", requestOptions)
+    fetch("http://localhost:5000/api/rab/addstock", requestOptions)
       .then((response) => {
         if (response.ok) {
           // setMessage("User updated successfully")
-          toggleUpdate();
+          toggleModal();
           
         }
         else {
-          setMessage("Not able to update");
+          setMessage("Not able to add stock");
         }
       })
       .catch(error => {
@@ -88,7 +63,7 @@ const UpdateUser = () => {
   }
   return (
     <>
-      <AdminNavbar/>
+      <Navbar/>
       <OperationHeader />
       <section className="section">
         <Container className="mt--7" fluid>
@@ -100,12 +75,12 @@ const UpdateUser = () => {
                 <CardHeader className="bg-white border-0">
                   <Row className="align-items-center">
                     <Col xs="8">
-                      <h3 className="mb-0">Update visitor</h3>
+                      <h3 className="mb-0">Add stock</h3>
                     </Col>
                     <Col className="text-right" xs="4">
                       <Button
                         color="primary"
-                        onClick={(e) => navigate("/visitors")}
+                        onClick={(e) => navigate("/rab/stock")}
                         size="sm"
                       >
                         Go back
@@ -116,7 +91,7 @@ const UpdateUser = () => {
                 <CardBody>
                   <Form onSubmit={submitHandler}>
                     <h6 className="heading-small text-muted mb-4">
-                      User information
+                      Seed 
                     </h6>
                     {!(message === "") && (
                       <Alert color="danger" fade={false}>
@@ -137,36 +112,38 @@ const UpdateUser = () => {
                               className="form-control-label"
                               htmlFor="input-first-name"
                             >
-                              First name
+                              seed name
                             </label>
                             <Input
                               style={{ color: 'black' }}
                               className="form-control-alternative"
-                              id="input-first-name"
-                              placeholder="First name"
+                              id="input-seed-name"
+                              placeholder="seed name"
                               type="text"
-                              value={user.firstname}
-                              onChange={(e) => setUser({ ...user, firstname: e.target.value })}
+                              value={data.seedname}
+                              onChange={(e) => setData({ ...data, seedname: e.target.value })}
                               required
                             />
                           </FormGroup>
                         </Col>
+                        </Row>
+                        <Row>
                         <Col lg="6">
                           <FormGroup>
                             <label
                               className="form-control-label"
                               htmlFor="input-last-name"
                             >
-                              Last name
+                              detail
                             </label>
                             <Input
                               style={{ color: 'black' }}
                               className="form-control-alternative"
-                              id="input-last-name"
-                              placeholder="Last name"
+                              id="input-detail"
+                              placeholder="seed detail"
                               type="text"
-                              value={user.lastname}
-                              onChange={(e) => setUser({ ...user, lastname: e.target.value })}
+                              value={data.detail}
+                              onChange={(e) => setData({ ...data, detail: e.target.value })}
                               required
                             />
                           </FormGroup>
@@ -176,80 +153,85 @@ const UpdateUser = () => {
                     <hr className="my-4" />
                     {/* Address */}
                     <h6 className="heading-small text-muted mb-4">
-                      Contact information
+                      Manufactured date information
                     </h6>
                     <div className="pl-lg-4">
                       <Row>
-                        <Col md="12">
+                        <Col md="6">
                           <FormGroup>
                             <label
                               className="form-control-label"
                               htmlFor="input-address"
                             >
-                              NATIONAL IDENTIFICATION
+                              Manufactured date
                             </label>
                             <Input
                               style={{ color: 'black' }}
                               className="form-control-alternative"
-                              id="input-address"
-                              placeholder="Home Address"
-                              type="text"
-                              value={user.nID}
-                              onChange={(e) => setUser({ ...user, nID: e.target.value })}
-                              required
-                            />
-                          </FormGroup>
-                        </Col>
-                      </Row>
-                      <Row>
-                        <Col lg="6">
-                          <FormGroup>
-                            <label
-                              className="form-control-label"
-                              htmlFor="input-email"
-                            >
-                              Email address
-                            </label>
-                            <Input
-                              style={{ color: 'black' }}
-                              className="form-control-alternative"
-                              id="input-email"
-                              placeholder="email"
-                              type="email"
-                              value={user.email}
-                              onChange={(e) => setUser({ ...user, email: e.target.value })}
-                              required
-                            />
-                          </FormGroup>
-                        </Col>
-                        <Col lg="6">
-                          <FormGroup>
-                            <label
-                              className="form-control-label"
-                              htmlFor="input-country"
-                            >
-                              Phone
-                            </label>
-                            <Input
-                              style={{ color: 'black' }}
-                              className="form-control-alternative"
-                              id="input-country"
-                              placeholder="phone"
-                              type="number"
-                              value={user.phone}
-                              onChange={(e) => setUser({ ...user, phone: e.target.value })}
+                              id="input-date"
+                              placeholder="manufactured date"
+                              type="date"
+                              value={data.manudate}
+                              onChange={(e) => setData({ ...data, manudate: e.target.value })}
                               required
                             />
                           </FormGroup>
                         </Col>
                       </Row>
                     </div>
+                    <div className="pl-lg-4">
+                      <Row>
+                        <Col lg="6">
+                          <FormGroup>
+                            <label
+                              className="form-control-label"
+                              htmlFor="input-quantity"
+                            >
+                              Quantity
+                            </label>
+                            <Input
+                              style={{ color: 'black' }}
+                              className="form-control-alternative"
+                              id="input-quantity"
+                              placeholder="Quantity"
+                              type="number"
+                              value={data.quantity}
+                              onChange={(e) => setData({ ...data, quantity: e.target.value })}
+                              required
+                            />
+                          </FormGroup>
+                        </Col>
+                        </Row>
+                        <Row>
+                        <Col lg="6">
+                          <FormGroup>
+                            <label
+                              className="form-control-label"
+                              htmlFor="input-price"
+                            >
+                              Price
+                            </label>
+                            <Input
+                              style={{ color: 'black' }}
+                              className="form-control-alternative"
+                              id="input-price"
+                              placeholder="Price"
+                              type="number"
+                              value={data.price}
+                              onChange={(e) => setData({ ...data, price: e.target.value })}
+                              required
+                            />
+                          </FormGroup>
+                        </Col>
+                      </Row>
+                    </div>
+
                     <Row>
                       <Col lg="6">
                         <input type="submit"
                           className="mx-2 btn btn-success btn-lg"
                           style={{ width: '300px', height: '50px' }}
-                          value="Update visitor" />
+                          value="Add seed to stock" />
                       </Col>
                     </Row>
                   </Form>
@@ -262,11 +244,11 @@ const UpdateUser = () => {
       </section>
       <Footer />
       <div>
-      <UpdateModal toggleModal={toggleUpdate} setShowModal={setShowUpdate} modalState={showUpdate} />
+      <UpdateModal toggleModal={toggleModal} setShowModal={setShowModal} modalState={showModal} />
       </div>
     </>
   );
 }
 
 
-export default UpdateUser;
+export default Addstock;

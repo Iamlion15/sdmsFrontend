@@ -3,9 +3,9 @@ import { PDFExport } from '@progress/kendo-react-pdf';
 import TransactionReport from './PeriodicTransactionReport';
 
 
-const Pdf = ({ info, setShow }) => {
+const TransactReport = ({ info, setShow }) => {
     const pdfExportComponent = useRef(null);
-    console.log("info",info)
+
     const handleExportPDF = () => {
         pdfExportComponent.current.save();
     };
@@ -45,9 +45,9 @@ const Pdf = ({ info, setShow }) => {
                         <thead>
                             <tr style={{ backgroundColor: '#f2f2f2' }}>
                                 <th style={{ padding: '10px', border: '1px solid #ddd', textAlign: 'left' }}>seed name</th>
-                                <th style={{ padding: '10px', border: '1px solid #ddd', textAlign: 'left' }}>seed details</th>
-                                <th style={{ padding: '10px', border: '1px solid #ddd', textAlign: 'left' }}>seed manufactured date</th>
-                                <th style={{ padding: '10px', border: '1px solid #ddd', textAlign: 'left' }}>seed stock in time</th>
+                                <th style={{ padding: '10px', border: '1px solid #ddd', textAlign: 'left' }}>seed quantity</th>
+                                <th style={{ padding: '10px', border: '1px solid #ddd', textAlign: 'left' }}>seed price</th>
+                                <th style={{ padding: '10px', border: '1px solid #ddd', textAlign: 'left' }}>Agro dealer</th>
                                 {/* <th style={{ padding: '10px', border: '1px solid #ddd', textAlign: 'left' }}>Date of purchase</th> */}
 
                             </tr>
@@ -55,10 +55,11 @@ const Pdf = ({ info, setShow }) => {
                         <tbody>
                             {info.map((data, index) => (
                                 <tr key={index}>
-                                    <td style={{ padding: '10px', border: '1px solid #ddd' }}>{data.seedname}</td>
-                                    <td style={{ padding: '10px', border: '1px solid #ddd' }}>{data.detail}</td>
-                                    <td style={{ padding: '10px', border: '1px solid #ddd' }}>{formatDate(data.manudate)}</td>
-                                    <td style={{ padding: '10px', border: '1px solid #ddd' }}>{formatDate(data.createdAt)}</td>
+                                    <td style={{ padding: '10px', border: '1px solid #ddd' }}>{data.seed.seedname}</td>
+                                    <td style={{ padding: '10px', border: '1px solid #ddd' }}>{data.quantity}</td>
+                                    <td style={{ padding: '10px', border: '1px solid #ddd' }}>{data.amount}</td>
+                                    <td style={{ padding: '10px', border: '1px solid #ddd' }}>{data.requestedFrom.firstname} {data.requestedFrom.lastname}</td>
+                                    {/* <td style={{ padding: '10px', border: '1px solid #ddd' }}>{formatDate(data.visitors.createdAt)}</td> */}
                                     
                                     
                                 </tr>
@@ -76,4 +77,4 @@ const Pdf = ({ info, setShow }) => {
     );
 };
 
-export default Pdf;
+export default TransactReport;

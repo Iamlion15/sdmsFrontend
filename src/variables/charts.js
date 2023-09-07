@@ -1,23 +1,4 @@
-/*!
-
-=========================================================
-* Argon Dashboard React - v1.2.3
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-dashboard-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/argon-dashboard-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
-
 const Chart = require("chart.js");
-const DataTranscoder=require("./DataTranscoderr");
 //
 // Chart extension for making the bars rounded
 // Code from: https://codepen.io/jedtrow/full/ygRYgo
@@ -219,7 +200,7 @@ function chartOptions() {
             borderCapStyle: "rounded",
           },
           rectangle: {
-            backgroundColor: colors.theme["warning"],
+            backgroundColor: colors.theme["primary"],
           },
           arc: {
             backgroundColor: colors.theme["primary"],
@@ -339,7 +320,7 @@ let chartExample1 = {
             content += label;
           }
 
-          content += "$" + yLabel + "khello";
+          content += " " + yLabel + " article";
           return content;
         },
       },
@@ -376,6 +357,10 @@ let chartExample2 = {
     scales: {
       yAxes: [
         {
+            gridLines: {
+              color: colors.gray[100],
+              zeroLineColor: colors.gray[100],
+            },
           ticks: {
             callback: function (value) {
               if (!(value % 1)) {
@@ -408,7 +393,7 @@ let chartExample2 = {
       {
         label: "Sales",
         data: [25, 20, 30, 22, 17, 29],
-        maxBarThickness: 10,
+        maxBarThickness: 60,
       },
     ],
   },

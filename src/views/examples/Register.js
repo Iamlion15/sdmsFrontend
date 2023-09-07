@@ -78,8 +78,25 @@ const Register = () => {
         console.log(error);
       });
   }
+
+
+    const checkId = (event) => {
+      const value = event.target.value;
+      // Extract year of birth from the input
+      const yearOfBirth = value.slice(1, 5);
+  
+      // Check if year of birth is valid (assuming a reasonable range, e.g., 1900-2022)
+      const isValidYear = /^\d{4}$/.test(yearOfBirth) && +yearOfBirth >= 1900 && +yearOfBirth <= 2022;
+  
+      // Set custom validity based on year validation
+      if (!isValidYear) {
+        event.target.setCustomValidity('Invalid year of birth');
+      } else {
+        event.target.setCustomValidity('');
+      }
+  }
   return (
-    <>
+    <> 
       <section className="section section-shaped section-lg">
         <div className="shape shape-style-1 bg-gradient-default">
           <span />
@@ -103,7 +120,7 @@ const Register = () => {
                     <Button
                       className="btn-neutral btn-icon"
                       color="default"
-                      onClick={() => navigate("/")}
+                      onClick={() => navigate("/admin/login")}
                     >
                       <span className="btn-inner--icon mr-1">
                         <img
@@ -155,6 +172,7 @@ const Register = () => {
                         </InputGroupAddon>
                         <Input
                           required
+                          pattern="[A-Za-z]+"
                           placeholder="First Name"
                           type="text"
                           onChange={(e) => setData({ ...data, firstname: e.target.value })}
@@ -170,6 +188,7 @@ const Register = () => {
                         </InputGroupAddon>
                         <Input
                           required
+                          pattern="[A-Za-z]+"
                           placeholder="Last Name"
                           type="text"
                           onChange={(e) => setData({ ...data, lastname: e.target.value })}
@@ -202,6 +221,8 @@ const Register = () => {
                           required
                           placeholder="Phone number"
                           type="number"
+                          //min={10}
+                          //max={10}
                           onChange={(e) => setData({ ...data, phone: e.target.value })}
                         />
                       </InputGroup>
@@ -217,6 +238,8 @@ const Register = () => {
                           required
                           placeholder="National Identification"
                           type="number"
+                          //min={16}
+                          //max={16}
                           onChange={(e) => setData({ ...data, nID: e.target.value })}
                         />
                       </InputGroup>

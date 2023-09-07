@@ -125,72 +125,23 @@ const Barchart = ({ chartExample2 }) => {
 
     return (
         <>
-            <Card className="shadow">
+            <Card className="">
                 <CardHeader className="bg-transparent">
                     <Row className="align-items-center">
                         <div className="col">
-                            <h6 className="text-uppercase text-muted ls-1 mb-1">
-                                Sentiment analysis
-                            </h6>
-                            <h2 className="mb-0">news Sentiments </h2>
+                            <h2 className="mb-0">Stock statistics </h2>
                         </div>
-                        <div className="col">
-                            <Nav className="justify-content-end" pills>
-                                <NavItem>
-                                    <NavLink
-                                        className={classnames("py-2 px-3", {
-                                            active: activeNav === 1,
-                                        })}
-                                        href="#pablo"
-                                        onClick={(e) => toggleNavs(e, 1)}
-                                    >
-                                        <span className="d-none d-md-block">+Ve</span>
-                                        <span className="d-md-none">+Ve</span>
-                                    </NavLink>
-                                </NavItem>
-                                <NavItem>
-                                    <NavLink
-                                        className={classnames("py-2 px-3", {
-                                            active: activeNav === 2,
-                                        })}
-                                        data-toggle="tab"
-                                        href="#pablo"
-                                        onClick={(e) => toggleNavs(e, 2)}
-                                    >
-                                        <span className="d-none d-md-block">-Ve</span>
-                                        <span className="d-md-none">-Ve</span>
-                                    </NavLink>
-                                </NavItem>
-                            </Nav>
-                        </div>
-
                     </Row>
                 </CardHeader>
                 <CardBody>
                     {/* Chart */}
                     <div className="chart">
                         <Bar
-                            data={initialiseData(chunkIndex)}
+                            data={chartExample2.data}
                             options={chartExample2.options}
                         />
                     </div>
                 </CardBody>
-                <CardFooter className="">
-                    <Row>
-                        <Col>
-                            <Button color="success" onClick={handlePreviousClick} disabled={chunkIndex === 0}>
-                                Previous
-                            </Button>
-                        </Col>
-                        <Col>
-                            <div className="d-flex justify-content-end">
-                                <Button color="success" onClick={handleNextClick} disabled={chunkIndex === getCurrentChunk().length - 1}>
-                                    Next
-                                </Button>
-                            </div>
-                        </Col>
-                    </Row>
-                </CardFooter>
             </Card>
         </>
     )

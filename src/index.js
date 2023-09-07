@@ -12,41 +12,28 @@ import "assets/vendor/nucleo/css/nucleo.css";
 
 // import Landing from "views/examples/Landing.js";
 import Table from "views/examples/usersTable.js";
-import Login from "views/examples/Login"
-import Register from "views/examples/Register.js";
-import UpdateUser from "views/examples/UpdateUser";
-import PrivilegeTable from "views/examples/privilegeTable ";
-import News from "views/examples/news";
-import NewsReview from "views/examples/newsReview";
 import UserLogin from "views/examples/UserLogin";
-import UserNews from "views/examples/UserNews";
-import UserNewsReview from "views/examples/UserNewsReview";
-import Indexii from "report/Indexiii";
-import UserCharts from "report/IndexiiiUser";
-import LandingPage from "views/examples/LandingPage";
+import RABStock from "views/examples/stockRabInfoView";
+import Noo from "views/examples/noo";
+import StockRequestAgroDealer from "views/examples/stockRequestAgroDealer";
+import Addstock from "views/examples/AddStock";
+import AgroMyStock from "views/examples/Mystock";
+
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
   <BrowserRouter>
     <Routes>
-      {/* <Route path="/" exact element={<Index />} /> */}
-      {/* <Route path="/landing-page" exact element={<Landing />} /> */}
-      <Route path="/user/news" exact element={<UserNews />} />
-      <Route path="/user/news/review/:id" exact element={<UserNewsReview />} />
-      <Route path="/user/register-page" exact element={<Register />} />
-      <Route path="/admin/users" exact element={<Table />} />
-      <Route path="/admin/news" exact element={<News />} />
-      <Route path="/charts" exact element={<Indexii />} />
-      <Route path="/user/charts" exact element={<UserCharts/>}/>
-      <Route path="news/review/:id" exact element={<NewsReview/>}/>
-      <Route path="/admin/privileges" exact element={<PrivilegeTable/>} />
-      <Route path="/updateuser/:id" exact element={<UpdateUser/>}/>
+      
+      <Route path="/rab/charts" exact element={<Noo />} />
+      <Route path="/rab/addstock" exact element={<Addstock />} />
+      <Route path="/agro/mystock" exact element={<AgroMyStock />} />
+      <Route path="//rab/stock" exact element={<RABStock/>}/>
+      <Route path="/agro/requestseed" exact element={<StockRequestAgroDealer/>} />
       <Route path="*" element={<Navigate to="/" replace />} />
-      <Route path="/admin/dashboard" exact element={<Indexii />} />
-      <Route path="/admin/login" exact element={<Login/>} />
       <Route path="/user/login" exact element={<UserLogin/>} />
-      <Route path="/" exact element={<LandingPage/>}/>
+      <Route path="/" exact element={<UserLogin/>}/>
 
     </Routes>
   </BrowserRouter>

@@ -1,6 +1,6 @@
 {
-  "name": "electronic journal sentiment analysis",
-  "version": "1.1.2",
+  "name": "seed distribution management system",
+  "version": "1.0.0",
   "description": "React",
   "main": "index.js",
   "author": "Creative Tim",
@@ -30,6 +30,7 @@
     "chart.js": "^2.9.4",
     "classnames": "2.3.2",
     "headroom.js": "0.12.0",
+    "jspdf": "^2.5.1",
     "moment": "2.29.4",
     "nouislider": "15.4.0",
     "react": ">=16.0.0",
