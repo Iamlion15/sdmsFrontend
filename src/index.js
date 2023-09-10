@@ -18,6 +18,10 @@ import Noo from "views/examples/noo";
 import StockRequestAgroDealer from "views/examples/stockRequestAgroDealer";
 import Addstock from "views/examples/AddStock";
 import AgroMyStock from "views/examples/Mystock";
+import AdminLogin from "views/examples/AdminLogin";
+import FarmerList from "views/examples/FarmersList";
+import AgrodealerList from "views/examples/AgroDealerList";
+import RABList from "views/examples/RABlist";
 
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -33,7 +37,12 @@ root.render(
       <Route path="/agro/requestseed" exact element={<StockRequestAgroDealer/>} />
       <Route path="*" element={<Navigate to="/" replace />} />
       <Route path="/user/login" exact element={<UserLogin/>} />
+      <Route path="/admin/farmer" exact element={<FarmerList/>} />
+      <Route path="/admin/agro" exact element={<AgrodealerList/>} />
+      <Route path="/admin/rab" exact element={<RABList/>} />
+      <Route path="/admin/login" exact element={<AdminLogin/>} />
       <Route path="/" exact element={<UserLogin/>}/>
+      
 
     </Routes>
   </BrowserRouter>

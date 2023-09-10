@@ -1,9 +1,9 @@
 
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import RequestseedModal from "./requestSeedModal";
-import AgroNavbar from "components/sharedNavbar/UserNavbar";
-import Invoice from "Generalreport/Invoice";
+import UpdateUserModal from "./UpdateUserModal";
+import DeleteModal from "./deleteModal";
+import AdminNavbar from "components/sharedNavbar/AdminNavbar";
 import {
   Card,
   CardHeader,
@@ -16,25 +16,17 @@ import {
 // core components
 import Footer from "components/Footers/Footer";
 import OperationHeader from "components/Navbars/OperationHeader";
-const StockRequestAgroDealer = () => {
-  const [quantityInfo, setQuantityInfo] = useState({
-    quantity: "",
-    amount: "",
-    seed:"",
-    requestedFrom:""
-  })
+const AgrodealerList = () => {
   const [message, setMessage] = useState('');
   const [data, setData] = useState([])
   const [msg, setMsg] = useState("")
   const [showModal, setShowModal] = useState(false)
-  const [info,setInfo]=useState({});
-  const [random,setRandom]=useState('')
+  const [info, setInfo] = useState({});
+  const [updateInfo, setUpdateInfo] = useState({});
+  const [showUpdateModal, setShowUpdateModal] = useState(false)
+  const [random, setRandom] = useState('')
   const timeoutRef = useRef(null);
   const [visible, setVisible] = useState(false)
-  const [showPrint, setShowPrint] = useState(false);
-    const toggleShowPrint = () => {
-        setShowPrint(!showPrint);
-    };
   const closeAlert = () => {
     setVisible(false);
   }
@@ -43,37 +35,44 @@ const StockRequestAgroDealer = () => {
     clearTimeout(timeoutRef.current)
     timeoutRef.current = setTimeout(closeAlert, 2000);
   }
-  const show = ( data) => {
-    setQuantityInfo({ ...quantityInfo,seed:data.seed._id, requestedFrom: data.owner._id })
+  const showDelete = (data) => {
     setInfo(data)
     setShowModal(!showModal)
+  }
+  const showUpdate = (data) => {
+    setUpdateInfo(data)
+    setShowUpdateModal(!showModal)
   }
   const toggleModal = () => {
     setShowModal(!showModal)
   }
-  const increaseQuantity = () => {
-    console.log(quantityInfo);
+  const toggleUpdateModal=()=>{
+    setShowUpdateModal(!showUpdateModal)
+  }
+  const deleteUser = (id) => {
+    const deleteData = {
+      "_id": id
+    }
     const methodOptions = {
-      method: 'POST',
+      method: 'DELETE',
       headers: {
         'content-Type': 'application/json',
         'x-auth-token': JSON.parse(localStorage.getItem("token"))
       },
-      body: JSON.stringify(quantityInfo)
-    }  
-    fetch("http://localhost:5000/api/agro/requestseed", methodOptions)
+      body: JSON.stringify(deleteData)
+    }
+    fetch("http://localhost:5000/api/farmer/delete", methodOptions)
       .then((response) => {
         if (!response.ok) {
           setMessage("PLEASE RETRY")
         }
         else {
           if (response.ok) {
-              setMsg("REQUEST FULFILLED SUCCESSFULLY")
-              toggleModal()
-              showAlert();
-              toggleShowPrint();
-              const ra= Math.random() * (10 - 1) + 1;
-              setRandom(ra);
+            setMsg("DELETED SUCCESSFULLY")
+            toggleModal()
+            showAlert();
+            const ra = Math.random() * (10 - 1) + 1;
+            setRandom(ra);
           }
         }
       })
@@ -82,6 +81,37 @@ const StockRequestAgroDealer = () => {
         setMessage("connect your server")
       })
   }
+
+  const UpdateUser = () => {
+    const methodOptions = {
+      method: 'POST',
+      headers: {
+        'content-Type': 'application/json',
+        'x-auth-token': JSON.parse(localStorage.getItem("token"))
+      },
+      body: JSON.stringify(updateInfo)
+    }
+    fetch("http://localhost:5000/api/admin/update", methodOptions)
+      .then((response) => {
+        if (!response.ok) {
+          setMessage("PLEASE RETRY")
+        }
+        else {
+          if (response.ok) {
+            setMsg("UPDATED SUCCESSFULLY")
+            toggleUpdateModal()
+            showAlert();
+            const ra = Math.random() * (10 - 1) + 1;
+            setRandom(ra);
+          }
+        }
+      })
+      .catch(error => {
+        console.log(error.message)
+        setMessage("connect your server")
+      })
+  }
+
   useEffect(() => {
     const requestOptions = {
       method: 'GET',
@@ -90,7 +120,7 @@ const StockRequestAgroDealer = () => {
         'x-auth-token': JSON.parse(localStorage.getItem("token"))
       },
     }
-    fetch("http://localhost:5000/api/agro/getstock", requestOptions)
+    fetch("http://localhost:5000/api/admin/getagro", requestOptions)
       .then((response) => {
         if (!response.ok) {
 
@@ -110,14 +140,14 @@ const StockRequestAgroDealer = () => {
 
   return (
     <>
-      <AgroNavbar />
+      <AdminNavbar />
       <OperationHeader />
       <Container className="mt--7" fluid>
         <Row>
           <div className="col">
             <Card className="shadow">
               <CardHeader className="border-0">
-                <h3 className="mb-0">Card tables</h3>
+                <h3 className="mb-0">farmer's list</h3>
                 {msg && visible && (
                   <Alert color="success" fade={true} isOpen={visible}>
                     <span className="alert-inner--icon">
@@ -132,31 +162,42 @@ const StockRequestAgroDealer = () => {
               <Table className="align-items-center table-flush" responsive>
                 <thead className="thead-light">
                   <tr>
-                    <th scope="col">Seed name</th>
-                    <th scope="col">Description</th>
-                    <th scope="col">Quantity in the stock</th>
-                    <th scope="col">REQUEST SEED</th>
+                    <th scope="col">Agrodealer's Name</th>
+                    <th scope="col">National ID</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Phone</th>
+                    <th scope="col">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {data.map((seedinfo) => {
+                  {data.map((agro) => {
                     return (
-                      <tr key={seedinfo._id}>
+                      <tr key={agro._id}>
 
-                        <td>{seedinfo.seed.seedname}</td>
+                        <td>{agro.firstname} {agro.lastname}</td>
                         <td>
-                          {seedinfo.seed.detail}
+                          {agro.nID}
                         </td>
                         <td>
-                          {seedinfo.quantity}
+                          {agro.email}
+                        </td>
+                        <td>
+                          {agro.phone}
                         </td>
                         <td>
                           <Button
                             color="success"
-                            onClick={(e) => show(seedinfo)}
+                            onClick={(e) => showUpdate(agro)}
                             size="md"
                           >
-                            Request seed
+                            Update
+                          </Button>
+                          <Button
+                            color="danger"
+                            onClick={(e) => showDelete(agro)}
+                            size="md"
+                          >
+                            Delete
                           </Button>
                         </td>
                       </tr>)
@@ -169,16 +210,14 @@ const StockRequestAgroDealer = () => {
       </Container>
       <Footer />
       <div>
-        <RequestseedModal toggleModal={toggleModal} modalState={showModal} setShowModal={setShowModal} quantityInfo={quantityInfo} setQuantityInfo={setQuantityInfo} increaseQuantity={increaseQuantity} info={info} />
+        <DeleteModal toggleModal={toggleModal} modalState={showModal} setShowModal={setShowModal} deleteUser={deleteUser} info={info} role={"farmer"} />
       </div>
       <div>
-      {showPrint && (
-                <Invoice setShow={toggleShowPrint} info={info} amount={quantityInfo}/>
-            )}
+        <UpdateUserModal toggleModal={toggleUpdateModal} modalState={showUpdateModal} setShowModal={setShowUpdateModal} updateUser={UpdateUser} info={updateInfo} setInfo={setUpdateInfo} role={"farmer"} />
       </div>
     </>
   );
 }
 
 
-export default StockRequestAgroDealer;
+export default AgrodealerList;
